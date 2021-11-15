@@ -3,5 +3,5 @@ from django.urls import path, include
 from .views import *
 
 urlpatterns = [
-    path('signup/', register_views.register)
+    path('signup/', register.Register)
 ]

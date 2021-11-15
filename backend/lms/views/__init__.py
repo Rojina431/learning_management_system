@@ -1,1 +1,1 @@
-from .register_views import *
+from .register import *
