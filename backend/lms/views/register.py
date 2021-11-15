@@ -7,9 +7,11 @@ from django.contrib.auth.hashers import make_password,check_password
 import re
 
 def validateMobile(mobile):
-    if re.match('^[0-9]*$',mobile):
-        return True
-    return False    
+  print(mobile.isdigit())
+  if mobile.isdigit():
+      return True
+  else:
+      return False        
 
 #Create your views here.
 @api_view(['POST'])
@@ -18,9 +20,9 @@ def Register(request):
    
     if serializer.is_valid():
         serializer.validated_data['password'] = make_password(serializer.validated_data['password'])
-        valid_mobile=serializer.validated_data['mobile']
+        valid_mobile=validateMobile(serializer.validated_data['mobile'])
         if valid_mobile:
           serializer.save()
           return Response({"data":serializer.data,"success":True},status=status.HTTP_200_OK)
-        return Response({"error":"Phone no most contains numeric characters"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error":{"mobile":["Phone no most contains numeric characters"]}}, status=status.HTTP_400_BAD_REQUEST)
     return Response({"error":serializer.errors},status=status.HTTP_400_BAD_REQUEST)
