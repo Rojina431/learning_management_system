@@ -1,0 +1,24 @@
+.signup{
+    background-image: url('../../images/bg.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.form-wrapper{
+    display: grid;
+    justify-content: right;
+}
+
+.form-wrapper h2{
+    color: blue;
+    text-align: center;
+    padding: 20px;
+    margin-right: 10px;
+}
+
+form{
+    border: 1px solid rgb(204, 202, 202);
+    margin: 0 60px 60px 0;
+    padding: 10px;
+}

@@ -6,6 +6,8 @@ Routes
 } from 'react-router-dom'
 import SignupComponent from './components/Account/signup';
 import Loading from './loading'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
 
 function App() {
   return (

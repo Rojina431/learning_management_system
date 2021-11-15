@@ -1,1 +1,8 @@
+.button-color{
+    background-color: blue;
+    border: none;
+}
 
+.error{
+    color: red;
+}
