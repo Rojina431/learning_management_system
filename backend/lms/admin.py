@@ -4,12 +4,12 @@ from .models import usermodel
 
 
 class AccountAdmin(UserAdmin):
-    list_display = ('email','date_joined', 'last_login', 'mobile', 'is_staff')
+    list_display = ('email','date_joined', 'last_login', 'mobile', 'is_staff', 'role')
     search_fields = ('email',)
     readonly_fields=('date_joined', 'last_login')
     exclude = ('username',)
     fieldsets =(
-        (None, {'fields': ('first_name','last_name' ,'email', 'password','mobile')}),
+        (None, {'fields': ('first_name','last_name' ,'email', 'password','mobile','role')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
     )
