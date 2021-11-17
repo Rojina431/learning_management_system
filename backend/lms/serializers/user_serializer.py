@@ -29,9 +29,9 @@ class LoginSerializer(serializers.ModelSerializer):
         password = attrs.get('password')
         user = auth.authenticate(email=email,password=password)
         if not user:
-            raise AuthenticationFailed('User credentials doesnot matched')
+            raise AuthenticationFailed({"error":{"details":'User credentials doesnot matched'}})
         if not user.role == attrs.get('role'):
-            raise AuthenticationFailed("No "+ attrs.get('role') + " found for this credentials")     
+            raise AuthenticationFailed({"error":{"details":"No "+ attrs.get('role') + " found for this credentials"}})     
        
         return user     
         # return user        
