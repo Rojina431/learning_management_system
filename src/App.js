@@ -8,6 +8,7 @@ import SignupComponent from './components/Account/signup';
 import Loading from './loading'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import LoginComponent from './components/Account/login';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <React.Suspense fallback={Loading}>
       <Routes>
         <Route path='/signup' exact element={<SignupComponent/>}/>
+        <Route path='/login' exact element={<LoginComponent/>}/>
         <Route path='/' exact element={<Home/>}/>
       </Routes>
       </React.Suspense>

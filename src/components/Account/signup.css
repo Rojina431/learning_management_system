@@ -1,4 +1,10 @@
 .signup{
+    display: flex;
+    min-height: 100vh;
+}
+
+.img{
+    flex: 0.6;
     background-image: url('../../images/bg.jpg');
     background-repeat: no-repeat;
     background-position: center;
@@ -6,19 +12,33 @@
 }
 
 .form-wrapper{
-    display: grid;
+    flex: 0.4;
     justify-content: right;
 }
 
 .form-wrapper h2{
     color: blue;
     text-align: center;
-    padding: 20px;
-    margin-right: 10px;
+    margin-top: 10px;
 }
 
 form{
     border: 1px solid rgb(204, 202, 202);
-    margin: 0 60px 60px 0;
+    border-radius: 10px;
+    margin: 60px 60px 60px 60px;
     padding: 10px;
+}
+
+@media screen and (max-width:900px){
+   
+     .img{
+         display: none !important;
+     }
+     .form-wrapper{
+         flex: 100%;
+         display: grid;
+         justify-content: center;
+         align-items: center;
+     }
+   
 }

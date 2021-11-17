@@ -4,6 +4,7 @@ import { SignupUser } from '../../redux/action/signupaction'
 import {Form, Label, Input, FormGroup, Button} from 'reactstrap'
 import './signup.css'
 import ErrorHandling from '../../errorhandling'
+import { RoleSelect } from '../select'
 
 const SignupComponent = () => {
 
@@ -11,9 +12,10 @@ const SignupComponent = () => {
     const signupdata = useSelector(state => state.signup.logs)
     const signupstatus = useSelector(state => state.signup.status)
     const [loading, setLoading] = useState(false)
-    const [postdata, setPostdata] = useState({"first_name":"","last_name":"","email":"","password":"","mobile":""})
-    const [signuperr, setSignuperr] = useState({'passworderr':"","emailerr":"", "mobileerr":""})
-  
+    const [postdata, setPostdata] = useState({"first_name":"","last_name":"","email":"","password":"","mobile":"","role":""})
+    const [signuperr, setSignuperr] = useState({'passworderr':"","emailerr":"", "mobileerr":"","roleerr":""})
+    const [signupsuccess, setSignupsuccess] = useState("")
+
     useEffect(() => {
       if(signupstatus === 400){
         const err = new ErrorHandling(signupdata)
@@ -26,32 +28,53 @@ const SignupComponent = () => {
         if (err.mobile !== "") {
             setSignuperr(prevState => ({...prevState, 'mobileerr':err.mobile[0]}))
         }
+        if (err.role !== "") {
+          setSignuperr(prevState => ({...prevState, 'roleerr':err.role[0]}))
+      }
+      }else{
+        setSignupsuccess("User registered successfully")
       }
     }, [signupstatus,signupdata])
 
     const Signup = async() => {
         console.log(postdata)
         setLoading(true)
-        setSignuperr({'passworderr':"","emailerr":"", "mobileerr":""})
-
+        Remove()
         await dispatch(SignupUser(postdata))
         setLoading(false)
-        setPostdata({"first_name":"","last_name":"","email":"","password":"","mobile":""})
+        setPostdata({"first_name":"","last_name":"","email":"","password":"","mobile":"","role":""})
     }
 
     const handleChange = (e) => {
         console.log(e.target.value)
-        setSignuperr({'passworderr':"","emailerr":"", "mobileerr":""})
+        Remove()
+        setLoading(false)
         setPostdata(prevState => ({...prevState, [e.target.name]:e.target.value}))
     }
     
+
+    const handleChangeRole = (data) => {
+      Remove()
+      if (data !== undefined){
+          setPostdata(prevState=>({...prevState,'role':data.value}))
+      }
+  }
+
+  const Remove = () => {
+    setSignupsuccess("")
+    setSignuperr({'passworderr':"","emailerr":"", "mobileerr":"","roleerr":""})
+  }
+
     return (
 <div className="signup"> 
+<div className="img"></div>
 <div className="form-wrapper">  
-<h2>E-Learning</h2> 
+
 <Form className="form"> 
+<h2>E-Learning</h2> 
 <div className="form-inner-wrapper">
- 
+{signuperr.detailserr !== ""?<p className="error">{signuperr.detailserr}</p>:""}
+{signupsuccess !== ""?<p className="success">{signupsuccess}</p>:""}
     <FormGroup>
     <Label for="first_name">
       First Name
@@ -119,6 +142,13 @@ const SignupComponent = () => {
       value={postdata.mobile}
     />
     {signuperr.mobileerr !== ""?<p className="error">{signuperr.mobileerr}</p>:""}
+  </FormGroup>
+  <FormGroup>
+    <Label for="role">
+      Role
+    </Label>
+    <RoleSelect name="role" handleChangeValue={handleChangeRole} value={postdata.role}/>
+    {signuperr.roleerr !== ""?<p className="error">{signuperr.roleerr}</p>:""}
   </FormGroup>
   {loading ? <Button disabled className="button-color">
     Submit
