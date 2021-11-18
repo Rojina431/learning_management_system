@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import usermodel
+from .models import *
 
 
 class AccountAdmin(UserAdmin):
@@ -9,7 +9,7 @@ class AccountAdmin(UserAdmin):
     readonly_fields=('date_joined', 'last_login')
     exclude = ('username',)
     fieldsets =(
-        (None, {'fields': ('first_name','last_name' ,'email', 'password','mobile','role')}),
+        (None, {'fields': ('first_name','last_name' ,'email', 'password','mobile','role','student_class','teacher_class')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
     )
@@ -24,3 +24,5 @@ class AccountAdmin(UserAdmin):
     list_filter = ()
 
 admin.site.register(usermodel.User, AccountAdmin)
+admin.site.register(subjectmodel.Subject)
+# admin.site.register(classmodel.Class)

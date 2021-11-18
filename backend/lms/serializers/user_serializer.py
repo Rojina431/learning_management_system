@@ -6,7 +6,7 @@ from django.contrib import auth
 class UserSerializer(serializers.ModelSerializer):
       class Meta:
           model = usermodel.User
-          fields = ['first_name','last_name' ,'email', 'password','mobile','role']
+          fields = ['first_name','last_name' ,'email', 'password','mobile','role','student_class','teacher_class']
 
       def create(self, validated_data):
           return usermodel.User.objects.create(**validated_data) 
@@ -33,5 +33,4 @@ class LoginSerializer(serializers.ModelSerializer):
         if not user.role == attrs.get('role'):
             raise AuthenticationFailed({"error":{"details":"No "+ attrs.get('role') + " found for this credentials"}})     
        
-        return user     
-        # return user        
+        return user          
