@@ -26,10 +26,12 @@ class User(AbstractUser):
    ]
     username = None
     email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
     mobile = models.CharField(max_length=10)
     role = models.CharField(choices=role_choices,max_length=200)
-    student_class = models.IntegerField(choices=Grade_Choices,null=True) 
-    teacher_class = MultiSelectField(choices=Grade_Choices,max_length=10,null=True)
+    student_class = models.IntegerField(choices=Grade_Choices,null=True,blank=True) 
+    teacher_class = MultiSelectField(choices=Grade_Choices,max_length=10,null=True,blank=True)
     last_login = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
@@ -38,11 +40,13 @@ class User(AbstractUser):
 
     REQUIRED_FIELDS = []
 
-    def tokens(self):
+    def refresh(self):
         refresh = RefreshToken.for_user(self)
-        return{
-            'access':str(refresh .access_token),
-            'refresh':str(refresh )
-        }
-    def __str__(self):
-        return f'{self.email}'
+       
+        refresh = str(refresh)
+        return refresh
+    def access(self):
+        refresh = RefreshToken.for_user(self)
+       
+        access = str(refresh.access_token)
+        return access

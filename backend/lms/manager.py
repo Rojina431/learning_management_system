@@ -5,18 +5,14 @@ class UserManager(BaseUserManager):
 
     use_in_migrations = True
 
-    def create_user(self, email, password,role, first_name,last_name, **extra_fields):
+    def create_user(self, email, password,role,student_class,teacher_class, **extra_fields):
         if not email:
             raise ValueError("Email is required")
         if not role:
-            raise ValueError('Select one role')
-        if not first_name:
-            raise ValueError('Enter first name')
-        if not last_name:
-            raise ValueError("Enter last name")            
+            raise ValueError('Select one role')          
 
         email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        user = self.model(email=email,student_class=student_class,teacher_class=teacher_class, **extra_fields)
         user.set_password((password))
         user.save(using=self._db)
         return user

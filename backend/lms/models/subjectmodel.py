@@ -19,6 +19,3 @@ class Subject(models.Model):
     subject_name = models.CharField(max_length=200)
     subject_code = models.CharField(max_length=200,unique=True)
     grade = models.IntegerField(choices=Grade_Choices)
-
-    def __str__(self):
-        return f'{self.subject_name}'

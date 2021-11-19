@@ -4,7 +4,7 @@ from .models import *
 
 
 class AccountAdmin(UserAdmin):
-    list_display = ('email','date_joined', 'last_login', 'mobile', 'is_staff', 'role')
+    list_display = ('email','date_joined', 'last_login', 'mobile', 'is_staff', 'role','student_class','teacher_class')
     search_fields = ('email',)
     readonly_fields=('date_joined', 'last_login')
     exclude = ('username',)
