@@ -5,16 +5,18 @@ import {Form, Label, Input, FormGroup, Button} from 'reactstrap'
 import './signup.css'
 import ErrorHandling from '../../errorhandling'
 import { RoleSelect } from '../select'
+import {Navigate} from 'react-router-dom'
 
 const LoginComponent = () => {
 
     const dispatch = useDispatch()
     const logindata = useSelector(state => state.login.logs)
     const loginstatus = useSelector(state => state.login.status)
+    const status = localStorage.getItem('status')
     const [loading, setLoading] = useState(false)
     const [postdata, setPostdata] = useState({"email":"","password":"","mobile":"","role":""})
     const [loginerr, setLoginerr] = useState({'passworderr':"","emailerr":"", "roleerr":"","detailserr":""})
-   console.log(logindata,loginstatus)
+   
     useEffect(() => {
       if(loginstatus === 400){
         const err = new ErrorHandling(logindata)
@@ -36,14 +38,12 @@ const LoginComponent = () => {
     const Login = async() => {
         setLoading(true)
         setLoginerr({'passworderr':"","emailerr":"", "roleerr":"","detailserr":""})
-
         dispatch(LoginUser(postdata))
         setLoading(false)
         setPostdata({"email":"","password":"","role":""})
     }
 
     const handleChange = (e) => {
-        console.log(e.target.value)
         setLoginerr({'passworderr':"","emailerr":"", "roleerr":"","detailserr":""})
         setPostdata(prevState => ({...prevState, [e.target.name]:e.target.value}))
     }
@@ -54,9 +54,11 @@ const LoginComponent = () => {
             setPostdata(prevState=>({...prevState,'role':data.value}))
         }
     }
-    
-return (
-<div className="signup"> 
+if (status === '200') {
+  return <Navigate to='/'/>
+} else {
+  return(
+    <div className="signup"> 
 <div className="img"></div>
 <div className="form-wrapper">  
 
@@ -108,8 +110,8 @@ return (
 </Form>
 </div>
 </div>
-
-    )
+  )
+}   
 }
 
 export default LoginComponent

@@ -9,25 +9,21 @@ import Loading from './loading'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import LoginComponent from './components/Account/login';
+import ViewsComponent from './components/Views';
 
 function App() {
   return (
-    <>
     <Router>
       <React.Suspense fallback={Loading}>
       <Routes>
         <Route path='/signup' exact element={<SignupComponent/>}/>
         <Route path='/login' exact element={<LoginComponent/>}/>
-        <Route path='/' exact element={<Home/>}/>
+        <Route path='/' exact element={<ViewsComponent/>}/>
       </Routes>
       </React.Suspense>
     </Router>
-    </>
   );
 }
 
-function Home() {
-  return <h2>Home</h2>;
-}
 
 export default App;

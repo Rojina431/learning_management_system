@@ -10,3 +10,15 @@
 .success{
     color: green;
 }
+
+.main{
+    display: flex;
+}
+
+.sidebar{
+    flex: 0.1;
+}
+
+.body{
+    flex:0.9
+}

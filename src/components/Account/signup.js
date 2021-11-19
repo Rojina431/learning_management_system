@@ -30,14 +30,17 @@ const SignupComponent = () => {
         }
         if (err.role !== "") {
           setSignuperr(prevState => ({...prevState, 'roleerr':err.role[0]}))
-      }
-      }else{
+      }if (err.first_name !== "") {
+        setSignuperr(prevState => ({...prevState, 'firsterr':err.first_name[0]}))
+    }if (err.last_name !== "") {
+      setSignuperr(prevState => ({...prevState, 'lasterr':err.last_name[0]}))
+    }
+      }else if(signupstatus===200){
         setSignupsuccess("User registered successfully")
       }
     }, [signupstatus,signupdata])
 
     const Signup = async() => {
-        console.log(postdata)
         setLoading(true)
         Remove()
         await dispatch(SignupUser(postdata))
@@ -46,7 +49,6 @@ const SignupComponent = () => {
     }
 
     const handleChange = (e) => {
-        console.log(e.target.value)
         Remove()
         setLoading(false)
         setPostdata(prevState => ({...prevState, [e.target.name]:e.target.value}))
@@ -62,8 +64,9 @@ const SignupComponent = () => {
 
   const Remove = () => {
     setSignupsuccess("")
-    setSignuperr({'passworderr':"","emailerr":"", "mobileerr":"","roleerr":""})
+    setSignuperr({'passworderr':"","emailerr":"", "mobileerr":"","roleerr":"","firsterr":"","lasterr":""})
   }
+
 
     return (
 <div className="signup"> 
@@ -87,7 +90,7 @@ const SignupComponent = () => {
       onChange={handleChange} 
       value={postdata.first_name}
     />
-   
+  {signuperr.firsterr !== ""?<p className="error">{signuperr.firsterr}</p>:""} 
   </FormGroup>
   <FormGroup>
     <Label for="last_name">
@@ -101,6 +104,7 @@ const SignupComponent = () => {
       onChange={handleChange} 
       value={postdata.last_name}
     />
+  {signuperr.lasterr !== ""?<p className="error">{signuperr.lasterr}</p>:""}  
   </FormGroup>
   <FormGroup>
     <Label for="email">
