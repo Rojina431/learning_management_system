@@ -1,14 +1,16 @@
 from rest_framework import status,mixins,generics
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from ..serializers import *
 from ..models import *
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
 
 class AllSubject(generics.GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMixin):
     serializer_class = subject_serializer.SubjectSerializer
     queryset = subjectmodel.Subject.objects.all()
     filter_backends = [DjangoFilterBackend]
+    permission_classes = [IsAuthenticated]
     filterset_fields = ['subject_code','grade']
     def get(self, request,*args,**kwargs):
         return self.list(request,*args,**kwargs)
@@ -19,7 +21,7 @@ class AllSubject(generics.GenericAPIView,mixins.ListModelMixin,mixins.CreateMode
 class SingleSubject(generics.GenericAPIView,mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin):
     serializer_class = subject_serializer.SubjectSerializer
     queryset = subjectmodel.Subject.objects.all()
-    
+    permission_classes = [IsAuthenticated]
     def get(self, request, *args,**kwargs):
         return self.retrieve(request,*args,**kwargs)
     def put(self, request,*args,**kwargs):
