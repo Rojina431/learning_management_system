@@ -15,7 +15,7 @@ export const FetchSubject = (token=1, grade = 0, subject_code = "") => async(dis
   }else{
       url = ""
   }
-  axios.get(`http://localhost:8000/api/subject/${url}`).then((response) => {
+  axios.get(`http://localhost:8000/api/subject/${url}`,{headers:{'Authorization':`Bearer ${token}`}}).then((response) => {
       dispatch({
           type:SubjectFetchSuccess,
           payload:response

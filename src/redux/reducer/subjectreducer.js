@@ -14,13 +14,13 @@ export default function SubjectReducer(state=initialState, action){
             return{
                 ...state,
                 logs:action.payload,
-                status:action.payload.status
+                status:200
             }
         case SubjectFetchFailed:
             return{
                 ...state,
                 logs:action.payload,
-                status:action.payload.status
+                status:400
             }   
         default:
             return state     
