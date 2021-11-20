@@ -43,8 +43,13 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    'multiselectfield'
+    'multiselectfield',
+    'django_filters'
 ]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+# }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
