@@ -1,18 +1,20 @@
-import SidebarComponent from "../sidebar"
+import SidebarComponent from "../studentsidebar"
 import '../../App.css'
 import { Navigate } from "react-router"
+import TeacherSidebarComponent from "../teachersidebar"
 
 
 const ViewsComponent = () => {
 
     const status = localStorage.getItem('status')
+    const role = localStorage.getItem('role')
   
 
 if (status === '200'){
    return(
     <div className="main">
     <div className="sidebar">
-    <SidebarComponent/>
+    {role === 'student'? <SidebarComponent/> : <TeacherSidebarComponent/>}
     </div>    
     
     <div className="body">

@@ -7,6 +7,7 @@ const Remove = () => {
     localStorage.removeItem('role')
     localStorage.removeItem('class') 
     localStorage.removeItem('status')
+    localStorage.removeItem('id')
 }
 
 const Refresh = async() => {
@@ -15,6 +16,7 @@ const Refresh = async() => {
     const refresh = localStorage.getItem('refresh')
     if (refresh !== null && refresh !== undefined && access !== null && access !== undefined){
         const refresh_expire = isExpired(refresh)
+        console.log(refresh_expire)
         const access_expire = isExpired(access)
         if (refresh_expire === true){
             Remove()

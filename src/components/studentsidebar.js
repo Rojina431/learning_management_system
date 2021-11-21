@@ -1,6 +1,6 @@
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarContent,SidebarHeader } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
-import {BookOpen} from 'react-feather'
+import {BookOpen, LogOut} from 'react-feather'
 import { Navigate } from 'react-router';
 import './sidebar.css'
 import { useEffect, useState } from 'react';
@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom';
 import useWindowsDimensions from './windowsdimensions';
 import { FetchSubject } from '../redux/action/subjectaction';
+import { LogoutUser } from '../redux/action/signupaction';
 import Refresh from './refresh';
 
 const SidebarComponent = () => {
@@ -16,6 +17,7 @@ const SidebarComponent = () => {
     const [redirect , setRedirect] = useState(false)
     const subjectdata = useSelector(state=>state.subject.logs)
     const subjectstatus = useSelector(state =>state.subject.status)
+    const [access,setAccess] = useState(localStorage.getItem('access') !== null || localStorage.getItem('access') !== undefined ? "True" : "False")
     const {height, width}  = useWindowsDimensions()
     console.log(width)
     const dispatch = useDispatch()
@@ -40,12 +42,16 @@ const SidebarComponent = () => {
       }  
     }
 
-    console.log(subjectdata.data,subjectstatus)
+    const Logoutuser = async() => {
+      await dispatch(LogoutUser)
+      setAccess("False")
+    }
+
 
     const toggleCollapse = () => {
         setIsCollapse(!isCollapse)
     }
-if (redirect) {
+if (redirect || access === "False") {
   return <Navigate to='/login'/>
 }else{
   return (
@@ -54,6 +60,7 @@ if (redirect) {
     <SidebarHeader>    
     <MenuItem onClick={toggleCollapse}><BookOpen/><span style={{fontWeight:"bolder",fontSize:"Larger"}}> E-Learning</span></MenuItem>
     <MenuItem>Dashboard<Link to='/'/></MenuItem>
+    <MenuItem onClick={Logoutuser}><span icon={LogOut}>Logout</span></MenuItem>
     </SidebarHeader>
      <SidebarContent> 
       <SubMenu title="Subject" icon={<BookOpen/>}>
