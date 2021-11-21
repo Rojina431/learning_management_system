@@ -1,10 +1,12 @@
+from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from ..models import *
 
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = subjectmodel.Subject
-        fields = ['subject_name','subject_code','grade']
+        fields = ['subject_name','subject_code','grade','subject_teacher']
+
 
     # def create(self, validated_data):
     #     return subjectmodel.Subject.objects.create(validated_data)    

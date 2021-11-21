@@ -30,7 +30,8 @@ def Register(request):
 def Login(request):
   serializer = user_serializer.LoginSerializer(data = request.data)
   user = usermodel.User.objects.filter(email=request.data["email"])
+  print(user[0].id)
   if serializer.is_valid():
-    return Response({"data":serializer.data,"success":True,"student_class":user[0].student_class,"teacher_class":user[0].teacher_class},status=status.HTTP_200_OK)    
+    return Response({"data":serializer.data,"success":True,"id":user[0].id,"student_class":user[0].student_class,"teacher_class":user[0].teacher_class},status=status.HTTP_200_OK)    
   else:
    return Response({"error":serializer.errors,"success":False},status=status.HTTP_400_BAD_REQUEST)  

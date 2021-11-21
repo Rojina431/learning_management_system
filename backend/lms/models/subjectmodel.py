@@ -1,4 +1,6 @@
 from django.db import models
+from .usermodel import User
+
 
 ##Subject model
 class Subject(models.Model):
@@ -19,3 +21,4 @@ class Subject(models.Model):
     subject_name = models.CharField(max_length=200)
     subject_code = models.CharField(max_length=200,unique=True)
     grade = models.IntegerField(choices=Grade_Choices)
+    subject_teacher = models.ForeignKey(User,models.SET_NULL,null=True,blank=True)

@@ -23,6 +23,9 @@ class AccountAdmin(UserAdmin):
     filter_horizontal = ()
     list_filter = ()
 
+class SubjectAdmin(admin.ModelAdmin):
+    list_display = ['subject_name','subject_code','grade','subject_teacher']
+
 admin.site.register(usermodel.User, AccountAdmin)
-admin.site.register(subjectmodel.Subject)
+admin.site.register(subjectmodel.Subject,SubjectAdmin)
 # admin.site.register(classmodel.Class)

@@ -11,10 +11,12 @@ class AllSubject(generics.GenericAPIView,mixins.ListModelMixin,mixins.CreateMode
     queryset = subjectmodel.Subject.objects.all()
     filter_backends = [DjangoFilterBackend]
     permission_classes = [IsAuthenticated]
-    filterset_fields = ['subject_code','grade']
-    def get(self, request,*args,**kwargs):
+    filterset_fields = ['subject_code','grade','subject_teacher']
+    def get(self, request,*args,**kwargs):  
         return self.list(request,*args,**kwargs)
+
     def post(self, request,*args,**kwargs):
+        print(request.subject_teacher)
         return self.create(request,*args,**kwargs)
      
 

@@ -50,3 +50,6 @@ class User(AbstractUser):
        
         access = str(refresh.access_token)
         return access
+
+    def __str__(self) -> str:
+        return f'{self.email}-{self.role}'  
