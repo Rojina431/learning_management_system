@@ -3,18 +3,14 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import {BookOpen, LogOut} from 'react-feather'
 import './sidebar.css'
 import { useEffect, useState } from 'react';
-import { Link,Navigate } from 'react-router-dom';
+import { Link,Navigate,useNavigate } from 'react-router-dom';
 import useWindowsDimensions from './windowsdimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { LogoutUser } from '../redux/action/signupaction';
-import { FetchSubject } from '../redux/action/subjectaction';
-import Refresh from './refresh';
 
 const TeacherSidebarComponent = () => {
 
     const [isCollapse, setIsCollapse] = useState(false)
-    const subjectdata = useSelector(state=>state.subject.logs)
-    const subjectstatus = useSelector(state =>state.subject.status)
     const classe = localStorage.getItem('class')
     let classes
     if (classe !== null && classe !== undefined){
@@ -23,6 +19,7 @@ const TeacherSidebarComponent = () => {
     const [Access,setAccess] = useState(localStorage.getItem('access') !== null || localStorage.getItem('access') !== undefined ? "True" : "False")
     const {height, width}  = useWindowsDimensions()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     useEffect(() => {
        if(width < 800){
          setIsCollapse(true)
@@ -54,17 +51,6 @@ const Logoutuser = async() => {
     setAccess("False")
 }
 
-const fetchClassSubject = async(grade) => {
-  const access = await Refresh()
-  if (access !== null && access !== undefined){
-    dispatch(FetchSubject(access,grade,"",localStorage.getItem('id')))
-  }else{
-   setAccess("False")
-  }
-  
-}
-
-console.log(subjectdata,subjectstatus)
 
 if (Access === "True"){
   return (
@@ -78,7 +64,7 @@ if (Access === "True"){
      <SidebarContent> 
       <SubMenu title="Class" icon={<BookOpen/>}>
         {classes[0] ? classes.map((grade, index) => (
-         <MenuItem key={index} onClick={() => fetchClassSubject(grade)}>{ClassLabel[grade]}</MenuItem>))
+         <MenuItem key={index}>{ClassLabel[grade]}<Link to="/teacher/subject" state={{ fromDashboard: "hello",grade:grade }}/></MenuItem>))
          :<MenuItem>No related subject!</MenuItem>}
        
       </SubMenu>

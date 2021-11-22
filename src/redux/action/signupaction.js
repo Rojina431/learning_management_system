@@ -2,9 +2,7 @@ import {
     SignupSuccess,
     SignupFailed,
     LoginSuccess,
-    LoginFailed,
-    LogoutSuccess,
-    LogoutFailed
+    LoginFailed
 } from '../actiontype'
 import axios from 'axios'
 
