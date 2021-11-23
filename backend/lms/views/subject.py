@@ -32,10 +32,3 @@ class SingleSubject(generics.GenericAPIView,mixins.RetrieveModelMixin,mixins.Upd
         return self.destroy(request,*args,**kwargs)
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)  
-
-# class FilterSubject(generics.GenericAPIView, mixins.RetrieveModelMixin):
-#     serializer_class = subject_serializer.SubjectSerializer
-#     queryset = subjectmodel.Subject.all()
-
-#     def get(self,request, *args, **kwargs):
-#         return self.r           
