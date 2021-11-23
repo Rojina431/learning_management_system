@@ -52,13 +52,19 @@ class User(AbstractUser):
         return access
 
     def __str__(self) -> str:
-        return f'{self.email}-{self.role}'  
+        return f'{self.email} - {self.role}'  
 
 class Student(models.Model):
     student = models.OneToOneField(User,on_delete=models.CASCADE)
     student_class = models.IntegerField(choices=Grade_Choices)    
     roll_no = models.BigIntegerField()    
 
+    def __str__(self):
+         return f'{self.student.first_name} {self.student.last_name} - {"roll: "+str(self.roll_no)}'
+
 class Teacher(models.Model):
     teacher = models.OneToOneField(User,on_delete=models.CASCADE)
-    teacher_class = MultiSelectField(choices=Grade_Choices,max_length=10)      
+    teacher_class = MultiSelectField(choices=Grade_Choices,max_length=10) 
+
+    def __str__(self):
+         return f'{self.teacher.first_name} {self.teacher.last_name}'    

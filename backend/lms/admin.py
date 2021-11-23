@@ -30,9 +30,17 @@ class TeacherAdmin(admin.ModelAdmin):
     list_display= ['teacher','teacher_class']
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ['student','roll_no','student_class']           
+    list_display = ['student','roll_no','student_class'] 
+
+class AssignmentCreateAdmin(admin.ModelAdmin):
+    list_display = ['teacher_create','subject_create','title','assignment_pdf_create','deadline']
+
+class AssignmentSubmitAdmin(admin.ModelAdmin):
+    list_display = ['student_submit', 'assignment_pdf_submit']                  
 
 admin.site.register(usermodel.User, AccountAdmin)
 admin.site.register(subjectmodel.Subject,SubjectAdmin)
 admin.site.register(usermodel.Teacher,TeacherAdmin)
 admin.site.register(usermodel.Student,StudentAdmin)
+admin.site.register(assignmentmodel.AssignmentCreate,AssignmentCreateAdmin)
+admin.site.register(assignmentmodel.AssignmentSubmit,AssignmentSubmitAdmin)

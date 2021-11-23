@@ -1,5 +1,5 @@
 from django.db import models
-from .usermodel import User
+from .usermodel import Teacher
 
 
 ##Subject model
@@ -21,4 +21,7 @@ class Subject(models.Model):
     subject_name = models.CharField(max_length=200)
     subject_code = models.CharField(max_length=200,unique=True)
     grade = models.IntegerField(choices=Grade_Choices)
-    subject_teacher = models.ForeignKey(User,models.SET_NULL,null=True,blank=True)
+    subject_teacher = models.ForeignKey(Teacher,models.SET_NULL,null=True,blank=True)
+
+    def __str__(self):
+        return f'{self.subject_name} - {"class: "+str(self.grade)}'
