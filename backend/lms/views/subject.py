@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 class AllSubject(generics.GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMixin):
     serializer_class = subject_serializer.SubjectSerializer
     queryset = subjectmodel.Subject.objects.all()
+    print((queryset[0].subject_teacher).teacher_id)
     filter_backends = [DjangoFilterBackend]
     permission_classes = [IsAuthenticated]
     filterset_fields = ['subject_code','grade','subject_teacher']

@@ -35,13 +35,14 @@ def Login(request):
     if user[0].role == 'student':
       student = usermodel.Student.objects.filter(student = user[0].id)
       if student:
-        return Response({"data":serializer.data,"success":True,"id":user[0].id,"student_class":student[0].student_class,"teacher_class":"","roll_no":student[0].roll_no},status=status.HTTP_200_OK)   
+        return Response({"data":serializer.data,"success":True,"user_id":student[0].id,"student_class":student[0].student_class,"teacher_class":"","roll_no":student[0].roll_no},status=status.HTTP_200_OK)   
       else :
         return Response({"error":{"details":"Student not registered"},"success":False},status=status.HTTP_401_UNAUTHORIZED)   
     else:
       teacher = usermodel.Teacher.objects.filter(teacher = user[0].id)
       if teacher:
-        return Response({"data":serializer.data,"success":True,"id":user[0].id,"student_class":"","teacher_class":teacher[0].teacher_class,"roll_no":""},status=status.HTTP_200_OK)   
+        
+        return Response({"data":serializer.data,"success":True,"user_id":teacher[0].id,"student_class":"","teacher_class":teacher[0].teacher_class,"roll_no":""},status=status.HTTP_200_OK)   
       else:
           return Response({"error":{"details":"Teacher not registered"},"success":False},status=status.HTTP_401_UNAUTHORIZED)    
 

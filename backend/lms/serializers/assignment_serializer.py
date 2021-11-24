@@ -4,7 +4,7 @@ from ..models import assignmentmodel
 class AssignmentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = assignmentmodel.AssignmentCreate
-        fields = ['teacher_create','title','assignment_pdf_create','deadline']
+        fields = ['teacher_create','title','assignment_pdf_create','deadline','subject_create']
 
 class AssignmentSubmitSerializer(serializers.ModelSerializer):
     class Meta:
