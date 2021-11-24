@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import LoginComponent from './components/Account/login';
 import ViewsComponent from './components/Views';
-import TeacherSubject from './components/Teacher/subjectcomponent';
+import TeacherComponent from './components/Teacher/teachercomponent';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path='/signup' exact element={<SignupComponent/>}/>
         <Route path='/login' exact element={<LoginComponent/>}/>
-        <Route path='/teacher/subject' exact element={<TeacherSubject/>}/>
+        <Route path='/teacher/subject' exact element={<TeacherComponent/>}/>
         <Route path='/' exact element={<ViewsComponent/>}/>
       </Routes>
       </React.Suspense>

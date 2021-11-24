@@ -27,14 +27,17 @@ export const LoginUser = (body) => async(dispatch) => {
   localStorage.removeItem('role')
   localStorage.removeItem('class')
   localStorage.removeItem('status')
-  localStorage.removeItem('id')
+  localStorage.removeItem('user_id')
+  localStorage.removeItem('roll_no')
   try{
     const response = await axios.post('http://localhost:8000/api/login/',body)
     console.log(response)
+    console.log(response.data.id)
     localStorage.setItem('access', response.data.data.access);
     localStorage.setItem('refresh', response.data.data.refresh);
     localStorage.setItem('role', response.data.data.role);
-    localStorage.setItem('id',response.data.id)
+    localStorage.setItem('user_id',response.data.user_id)
+    localStorage.setItem('roll_no',response.data.roll_no)
     localStorage.setItem('status',200)
     localStorage.setItem('class', response.data.data.role === 'student' ? response.data.student_class : response.data.teacher_class)
     console.log(localStorage.getItem('access'))
@@ -56,5 +59,6 @@ export const LogoutUser = () =>{
   localStorage.removeItem('role')
   localStorage.removeItem('class')
   localStorage.removeItem('status')
-  localStorage.removeItem('id')
+  localStorage.removeItem('user_id')
+  localStorage.removeItem('roll_no')
 }

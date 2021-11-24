@@ -38,7 +38,7 @@ const LoginComponent = () => {
     const Login = async() => {
         setLoading(true)
         setLoginerr({'passworderr':"","emailerr":"", "roleerr":"","detailserr":""})
-        dispatch(LoginUser(postdata))
+        await  dispatch(LoginUser(postdata))
         setLoading(false)
         setPostdata({"email":"","password":"","role":""})
     }

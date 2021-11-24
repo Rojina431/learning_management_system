@@ -7,7 +7,8 @@ const Remove = () => {
     localStorage.removeItem('role')
     localStorage.removeItem('class') 
     localStorage.removeItem('status')
-    localStorage.removeItem('id')
+    localStorage.removeItem('user_id')
+    localStorage.removeItem('roll_no')
 }
 
 const Refresh = async() => {

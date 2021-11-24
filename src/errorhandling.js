@@ -6,4 +6,7 @@ export default function ErrorHandling(response){
     this.role = response.error.role || ""
     this.first_name = response.error.first_name || ""
     this.last_name = response.error.last_name || ""
+    this.deadline = response.error.deadline || ""
+    this.title = response.error.title || ""
+    this.assignment_pdf_create = response.error.assignment_pdf_create || ""
 }
