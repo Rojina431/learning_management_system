@@ -1,57 +1,57 @@
 import {
-    AssignmentCreateSuccess,
-    AssignmentCreateFailed,
-    CreateAssignmentUpdateSuccess,
-    CreateAssignmentUpdateFailed,
-    CreateAssignmentFetchSuccess,
-    CreateAssignmentFetchFailed
+    AssignmentSubmitSuccess,
+    AssignmentSubmitFailed,
+    SubmitAssignmentUpdateSuccess,
+    SubmitAssignmentUpdateFailed,
+    SubmitAssignmentFetchSuccess,
+    SubmitAssignmentFetchFailed
 } from '../actiontype'
 
 const initialState = {
-    createlogs:[],
+    submitlogs:[],
     fetchlogs:[],
-    createstatus:null,
+    submitstatus:null,
     fetchstatus:null
 }
 
-export default function AssignmentCreateReducer(state=initialState,action){
+export default function AssignmentSubmitReducer(state=initialState,action){
     switch(action.type){
-        case AssignmentCreateSuccess:   
+        case AssignmentSubmitSuccess:
             return{
                 ...state,
-                createlogs:action.payload,
-                createstatus:200
+                submitlogs:action.payload,
+                submitstatus:200
             } 
-        case CreateAssignmentFetchSuccess:
+        case SubmitAssignmentFetchSuccess:
             return{
                 ...state,
                 fetchlogs:action.payload,
                 fetchstatus:200
             }  
-        case CreateAssignmentUpdateSuccess:
+        case SubmitAssignmentUpdateSuccess:
             return{
                     ...state,
                     fetchlogs:action.payload,
                     fetchstatus:200
-                }  
-        case AssignmentCreateFailed:
+                }    
+        case AssignmentSubmitFailed:
             return {
                 ...state,
-                createlogs:action.payload,
-                createstatus:400
+                submitlogs:action.payload,
+                submitstatus:400
             } 
-        case CreateAssignmentFetchFailed:
+        case SubmitAssignmentFetchFailed:
             return {
                 ...state,
                 fetchlogs:action.payload,
                 fetchstatus:400
             } 
-        case CreateAssignmentUpdateFailed:
+        case SubmitAssignmentUpdateFailed:
             return {
                     ...state,
                     fetchlogs:action.payload,
                     fetchstatus:400
-                }     
+                } 
         default:
             return state             
     }

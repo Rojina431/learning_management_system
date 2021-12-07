@@ -10,4 +10,6 @@ export default function MoreErrorHandling(response){
     this.deadline = response.deadline || ""
     this.title = response.title || ""
     this.assignment_pdf_create = response.assignment_pdf_create || ""
+    this.assignment_pdf_submit = response.assignment_pdf_submit || ""
+    this.assignment = response.assignment || ""
 }

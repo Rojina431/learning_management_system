@@ -44,14 +44,14 @@ const SidebarComponent = () => {
 
     const Logoutuser = async() => {
       await dispatch(LogoutUser)
-      setAccess("False")
+      setRedirect(true)
     }
 
 
     const toggleCollapse = () => {
         setIsCollapse(!isCollapse)
     }
-if (redirect || access === "False") {
+if (redirect) {
   return <Navigate to='/login'/>
 }else{
   return (
@@ -66,10 +66,12 @@ if (redirect || access === "False") {
       <SubMenu title="Subject" icon={<BookOpen/>}>
         {subjectdata.data !== undefined ? subjectdata.data.length > 0 ? subjectdata.data.map((sub, index) => {
           return (
-            <MenuItem key={index}>{sub.subject_name.toUpperCase()}</MenuItem>
+            <MenuItem key={index}>{sub.subject_name.toUpperCase()} <Link to='/student/class' state={{subject_id:sub.id, subject_name:sub.subject_name}}/></MenuItem>
           )
         }): subjectstatus === 400 ?
-        <MenuItem className="error">{subjectdata.detail}</MenuItem>:<MenuItem>No related subject!</MenuItem>:<MenuItem className="error">{subjectdata.detail}</MenuItem>}
+        <MenuItem className="error">
+         {subjectdata.detail}
+       </MenuItem>:<MenuItem>No related subject!</MenuItem>:<MenuItem className="error">{subjectdata.detail}</MenuItem>}
        
       </SubMenu>
       </SidebarContent>

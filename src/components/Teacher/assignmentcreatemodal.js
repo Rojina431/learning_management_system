@@ -93,6 +93,7 @@ const AssignmentCreateModal = (props) => {
           filedata.append("title",assignmentpost.title)
           filedata.append("deadline",assignmentpost.deadline)
           filedata.append("assignment_pdf_create",assignmentpost.assignment_pdf_create)
+          filedata.append("is_submitted",false)
           dispatch(AssignmentCreate(filedata,access))
         }else{
         //   Remove()
