@@ -73,6 +73,7 @@ const SubmitAssignmentModal = (props) => {
             formdata.append('is_submitted',true)
             dispatch(AssignmentSubmit(formdata, access))
             // dispatch(SubmitAssignmentUpdate(props.assignment.id, access, {"is_submitted":true}))
+            props.fetchSubmitAssignment()
             toggleOpen(true)
             setLoading(false)
             setFile([])

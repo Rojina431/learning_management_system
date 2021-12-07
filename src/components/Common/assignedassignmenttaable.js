@@ -10,6 +10,15 @@ import SubmitAssignmentModal from "../Student/submitassignment"
 
 const AssignedAssignmentTable = (props) => {
 
+    const tbodyStyle = {
+        borderTop: "1px solid #dee2e6",
+        backgroundColor:" #F4F7F2 "
+    }
+
+    const theadStyle = {
+        backgroundColor:"#EBEEE9"
+    }
+
     const [assignId, setAssignId] = useState([0])
     const [show, setShow] = useState(false)
     const [redirect, setRedirect] = useState(false)
@@ -62,7 +71,9 @@ const AssignedAssignmentTable = (props) => {
 
 
     const DateConverison = (time) => {
-        const date = new Date(time).toString()
+        const months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
+        const dateObj = new Date(time)
+        const date = dateObj.getDate() + ' ' + months[dateObj.getMonth()] + ' ' + dateObj.getFullYear() + ' ' + dateObj.getHours() + ':' + dateObj.getMinutes() + ':' + dateObj.getSeconds()
         return date
     }
 
@@ -70,17 +81,6 @@ const AssignedAssignmentTable = (props) => {
         console.log("hello")
         setShow(value)
         setAssignment(assignment)
-    }
-
-
-
-    const IsSubmitted = (val) => {
-        console.log(typeof (val))
-        if (val == true) {
-            return <span ><Check size={15} style={{ border: "1px solid green", borderRadius: "50%", backgroundColor: "light-green", color: "white" }} /></span>
-        } else {
-            return <span><X size={15} style={{ border: "1px solid red", borderRadius: "50%", backgroundColor: "red", color: "white" }} /></span>
-        }
     }
 
     const assignmentcreate = useMemo(() => {
@@ -130,7 +130,6 @@ const AssignedAssignmentTable = (props) => {
         }
     }
 
-    console.log(submitassignmentdata, student, user)
     const filterStudent = (submit_student) => {
         console.log("submit")
         console.log(submit_student)
@@ -147,21 +146,56 @@ const AssignedAssignmentTable = (props) => {
             }
         }
     }
-    // const student = []
+
+    const CalculateDeadline = (assign, from) => {
+        const current = new Date(Date.now())
+        const deadline = new Date(assign.deadline)
+        console.log(current, deadline)
+        const diffdate = deadline - current
+        const diffday = Math.floor(Math.abs(diffdate) / (1000*60*60*24))
+        const diffhours = Math.floor(Math.abs(diffdate)/(1000*60*60)) 
+        const diffminutes = Math.floor(Math.abs(diffdate)/(1000*60)) 
+        let difftime = 0
+        if (diffday < 1 && diffhours < 1) {
+          difftime = diffminutes + 'minutes'
+        } else if(diffday < 1) {
+            difftime = diffhours + ' hours'
+        } else {
+            difftime = diffday + ' days'
+        }
+        if (diffdate > 0) {
+            if (from === 'deadline') {
+                return <Badge color="warning">{difftime} remaining</Badge>
+            } else {
+               return <Badge style={{ cursor: "pointer" }} color="success" onClick={() => {
+                    OpenModal(!show, assign)
+                }}>Submit Assignment</Badge>
+            }
+            
+        } else {
+            if (from === 'deadline') {
+             return <Badge color="danger">{difftime} ahead from deadline</Badge>
+            } else {
+              return <Badge color='danger'>Deadline crossed</Badge>
+            }
+        }
+    }
+
     return (
         <div >
-            {assignmentcreate !== undefined && <Table responsive style={{border:"1px solid grey"}} bordered>
-                <thead>
+            {assignmentcreate !== undefined && <Table responsive style={{border:"1px solid #dee2e6"}} bordered>
+                <thead style={theadStyle}>
                     <tr>
                         <th>Title</th>
                         <th>Assignment</th>
                         <th>Deadline</th>
-                        {props.from === 'teacher' && <th></th>}
+                        <th></th>
+                        {props.from === 'student' && <th></th>}
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style={tbodyStyle}>
                 {assignmentcreate.length > 0 ? assignmentcreate.map((assign, index) => {
-
+                    
                     return (
                             <>
                                 <tr>
@@ -169,12 +203,14 @@ const AssignedAssignmentTable = (props) => {
                                     <td><a href={assign.assignment_pdf_create} target="_blank" style={{ color: "black" }}>Show Assignment</a></td>
                                     <td>{DateConverison(assign.deadline)}</td>
                                     {props.from === 'teacher' && <td><Badge style={{ cursor: "pointer" }} color="success" onClick={() => showMore(assign.id)}>Show Submitted</Badge></td>}
+                                    {props.from === 'student' && <td>{CalculateDeadline(assign, 'submit')}</td>}
+                                    {props.from === 'student' && <td>{CalculateDeadline(assign, 'deadline')}</td>}
                                 </tr>
                                 {props.from === 'teacher' && <tr>
                                     {(submitassignmentdata !== undefined && submitassignmentdata.data !== undefined && submitassignmentdata.data !== null && assignId[0] === assign.id) ?
                                         <td colSpan="4">
                                             <Table responsive bordered>
-                                                <thead style={{ backgroundColor: "rgb(255,255,204)" }}>
+                                                <thead style={theadStyle}>
                                                     <tr>
                                                         <th>Student name</th>
                                                         <th>Roll No</th>
@@ -182,7 +218,7 @@ const AssignedAssignmentTable = (props) => {
                                                         <th>Submitted Date</th>
                                                     </tr>
                                                 </thead>
-                                                {(submitassignmentdata.data).length > 0 ? <tbody>
+                                                {(submitassignmentdata.data).length > 0 ? <tbody style={tbodyStyle}>
                                                     {submitassignmentdata.data.map((assign, index) => {
                                                         console.log(assign)
                                                         const [user, student] = filterStudent(assign.student_submit)
@@ -214,13 +250,13 @@ const AssignedAssignmentTable = (props) => {
             {props.from === 'student' && <div>
                 <h6>Submitted Assignment</h6>
                 {submitassignmentdata.data !== undefined && <Table responsive bordered>
-                    <thead>
+                    <thead style={theadStyle}>
                         <tr>
                             <th>Assignment</th>
                             <th>Submitted Date</th>
                         </tr>
                     </thead>
-                    {submitassignmentdata.data.length > 0 ? <tbody>
+                    {submitassignmentdata.data.length > 0 ? <tbody style={tbodyStyle}>
                         {submitassignmentdata.data.map((assign, index) => {
                             DateConverison(assign.deadline)
                             return (
@@ -230,11 +266,13 @@ const AssignedAssignmentTable = (props) => {
                                 </tr>
                             )
                         })
-                        }</tbody> : submitassignmentdata.data.length === 0 && submitassignmentstatus === 200 ? <p>No assignment submitted for this subject, {props.subjectdata.subject_name}</p>
+                        }</tbody> : submitassignmentdata.data.length === 0 && submitassignmentstatus === 200 ? <tbody style={tbodyStyle}>
+                            <tr><td colSpan="2">No assignment submitted for this subject, </td></tr>
+                        </tbody>
                         : submitassignmentstatus === 400 ? <p>Error!</p> : <Loading />}
                 </Table>}
             </div>}
-            <SubmitAssignmentModal openModal={OpenModal} show={show} assignment={assignment} />
+            <SubmitAssignmentModal openModal={OpenModal} show={show} assignment={assignment} fetchSubmitAssignment={fetchSubmitAssignment}/>
         </div>
     )
 }
