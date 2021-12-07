@@ -14,9 +14,10 @@ class AssignmentCreate(models.Model):
         return f'{self.subject_create.subject_name} - {self.title}'
 
 class AssignmentSubmit(models.Model):
-    assignment = models.OneToOneField(AssignmentCreate,on_delete=models.CASCADE)
+    assignment = models.ForeignKey(AssignmentCreate,on_delete=models.CASCADE)
     student_submit = models.ForeignKey(Student,on_delete=models.CASCADE)
     assignment_pdf_submit = models.FileField(upload_to='assignment_submit')
     submited_date = models.DateTimeField(auto_now=True)
+    is_submitted = models.BooleanField()
 
   

@@ -1,5 +1,4 @@
 from rest_framework import permissions
-from rest_framework.decorators import permission_classes
 from rest_framework.generics import GenericAPIView
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
@@ -13,7 +12,7 @@ class AssignmentCreate(GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMi
     queryset = assignmentmodel.AssignmentCreate.objects.all()
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
-    fieldsets_filter = ['subject_create','subject_teacher']
+    filterset_fields = ['subject_create','teacher_create']
 
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs)
@@ -41,8 +40,8 @@ class AssignmentSubmit(GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMi
     serializer_class = assignment_serializer.AssignmentSubmitSerializer
     queryset = assignmentmodel.AssignmentSubmit.objects.all()
     permission_classes = [IsAuthenticated]
-    # filter_backends = [DjangoFilterBackend]
-    # fieldsets_filter = ['subject_create']
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['student_submit', 'assignment']
 
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs)

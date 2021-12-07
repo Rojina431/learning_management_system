@@ -1,9 +1,10 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from ..serializers import user_serializer
 from django.contrib.auth.hashers import make_password,check_password
 from ..models import *
+from rest_framework.permissions import IsAuthenticated
 
 
 def validateMobile(mobile):
@@ -48,3 +49,24 @@ def Login(request):
 
   else:
    return Response({"error":serializer.errors,"success":False},status=status.HTTP_400_BAD_REQUEST)  
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def Users(request):
+  user = usermodel.User.objects.all()
+  serializer = user_serializer.UserSerializer(user, many=True)
+  return Response({"data":serializer.data, "success":True}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def Students(request):
+  student = usermodel.Student.objects.all()
+  serializer = user_serializer.StudentSerializer(student, many=True)
+  return Response({"data":serializer.data, "success":True}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def Teachers(request):
+  teacher = usermodel.Teacher.objects.all()
+  serializer = user_serializer.TeacherSerializer(teacher, many=True)
+  return Response({"data":serializer.data, "success":True}, status=status.HTTP_200_OK)

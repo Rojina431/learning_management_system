@@ -37,4 +37,20 @@ class LoginSerializer(serializers.ModelSerializer):
         if not user.role == attrs.get('role'):
             raise AuthenticationFailed({"error":{"details":"No "+ attrs.get('role') + " found for this credentials"}})     
         
-        return user       
+        return user      
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=usermodel.User
+        fields = ['id','email','first_name','last_name','mobile', 'role']
+
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=usermodel.Student
+        fields = ['id','student','roll_no', 'student_class']   
+
+class TeacherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=usermodel.Teacher
+        fields= ['id', 'teacher', 'teacher_class']             
+             
