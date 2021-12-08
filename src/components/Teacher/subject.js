@@ -18,7 +18,7 @@ const SubjectComponent = (props) => {
     
   return(
     <div className="body">
-    <h2 style={{textAlign:"center"}}>Class {ClassLabel[props.grade]}</h2>
+    <h2 style={{textAlign:"center" , color:"#0d6efd"}}>Class {ClassLabel[props.grade]}</h2>
     <div className="subject">
         { props.subjectdata.data.map((sub,index) => {
           return (

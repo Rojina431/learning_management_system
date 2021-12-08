@@ -55,7 +55,7 @@ if (redirect) {
   return <Navigate to='/login'/>
 }else{
   return (
-    <ProSidebar collapsed={isCollapse}>
+    <ProSidebar collapsed={isCollapse} >
     <Menu>
     <SidebarHeader>    
     <MenuItem onClick={toggleCollapse}><BookOpen/><span style={{fontWeight:"bolder",fontSize:"Larger"}}> E-Learning</span></MenuItem>

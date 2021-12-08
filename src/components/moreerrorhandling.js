@@ -1,4 +1,5 @@
 export default function MoreErrorHandling(response){
+    console.log(response)
     // this.details = response.error.details || ""
     // this.password = response.error.password || ""
     // this.email = response.error.email || ""
@@ -12,4 +13,5 @@ export default function MoreErrorHandling(response){
     this.assignment_pdf_create = response.assignment_pdf_create || ""
     this.assignment_pdf_submit = response.assignment_pdf_submit || ""
     this.assignment = response.assignment || ""
+    this.grade = response.assignment_grade || ""
 }

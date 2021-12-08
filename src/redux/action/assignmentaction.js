@@ -10,7 +10,11 @@ import {
     SubmitAssignmentUpdateSuccess,
     SubmitAssignmentUpdateFailed,
     SubmitAssignmentFetchSuccess,
-    SubmitAssignmentFetchFailed
+    SubmitAssignmentFetchFailed,
+    AssignmentSubmitGradeSuccess,
+    AssignmentSubmitGradeFailed,
+    AssignmentFetchGradeSuccess,
+    AssignmentFetchGradeFailed
 } from '../actiontype'
 import axios from 'axios'
 
@@ -136,6 +140,37 @@ export const SubmitAssignmentFetch = (token, student=null, assignment=null) => a
     }catch(err){
      dispatch({
          type:SubmitAssignmentFetchFailed,
+         payload:err.response
+     })
+    }
+}
+
+export const SubmitAssignmentGrade = (token, body) => async(dispatch) => {
+    try{
+       const response = await axios.post('http://localhost:8000/api/assignment/grade/',body, {headers:{'Authorization':`Bearer ${token}`}})
+       dispatch({
+           type:AssignmentSubmitGradeSuccess,
+           payload:response
+       })
+    }catch(err){
+        dispatch({
+            type:AssignmentSubmitGradeFailed,
+            payload:err.response
+        })
+    }   
+}
+
+export const FetchSubmitAssignmentGrade = (token) => async(dispatch) => {
+    try{
+     const response = await axios.get('http://localhost:8000/api/assignment/grade/', {headers:{'Authorization':`Bearer ${token}`}})
+     
+     dispatch({
+         type:AssignmentFetchGradeSuccess,
+         payload:response
+     })
+    }catch(err){
+     dispatch({
+         type:AssignmentFetchGradeFailed,
          payload:err.response
      })
     }

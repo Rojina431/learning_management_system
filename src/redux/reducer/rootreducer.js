@@ -1,5 +1,6 @@
 import { combineReducers } from "redux"
 import AssignmentCreateReducer from "./assignmentcreatereducer"
+import AssignmentGradeReducer from "./assignmentgradereducer"
 import AssignmentSubmitReducer from "./assignmentsubmitreducer"
 import LoginReducer from "./loginreducer"
 import SignupReducer from './signupreducer'
@@ -15,6 +16,7 @@ const AppReducer =combineReducers({
     user:UserFetchReducer,
     student:StudentFetchReducer,
     teacher:TeacherFetchReducer,
+    grade:AssignmentGradeReducer
 })
 
 export const RootReducer = (state, action) => {

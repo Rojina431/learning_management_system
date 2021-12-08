@@ -14,7 +14,6 @@ const AssignedAssignment = (props) =>{
     const createassignmentstatus = useSelector(state => state.assignmentcreate.fetchstatus)
     const dispatch = useDispatch()
 
-    console.log(props)
 
     useEffect(() => {
        if (props.subject_id !== undefined && props.subject_id !== null){

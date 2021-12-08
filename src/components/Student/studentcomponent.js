@@ -6,7 +6,6 @@ const StudentComponent = (props) => {
 
     const location = useLocation()
 
-    console.log(location.state.subject_id)
 
     return (
         <div className="main">
@@ -14,7 +13,7 @@ const StudentComponent = (props) => {
                 <SidebarComponent/>
             </div>
             <div>
-                <h1 style={{textAlign:"center"}}>{location.state.subject_name}</h1>
+                <h1 style={{textAlign:"center", color:"#0d6efd"}}>{location.state.subject_name}</h1>
                 {location !== undefined &&  location !== null && <AssignedAssignment subject_id={location.state.subject_id}/>}
             </div>
         </div>

@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from "react"
 import { Check, X } from "react-feather"
 import { useDispatch, useSelector } from "react-redux"
+import { Navigate } from "react-router"
 import { Badge, Table } from "reactstrap"
-import { SubmitAssignmentFetch } from "../../redux/action/assignmentaction"
+import { FetchSubmitAssignmentGrade, SubmitAssignmentFetch } from "../../redux/action/assignmentaction"
 import { StudentFetch, UserFetch } from "../../redux/action/useraction"
 import Loading from "../loading"
 import Refresh from "../refresh"
 import SubmitAssignmentModal from "../Student/submitassignment"
+import SubmitGrade from "../Teacher/submitgrade"
 
 const AssignedAssignmentTable = (props) => {
 
@@ -20,17 +22,22 @@ const AssignedAssignmentTable = (props) => {
     }
 
     const [assignId, setAssignId] = useState([0])
+    const [assignment, setAssignment] = useState([])
+    const [open, setOpen] = useState(false)
     const [show, setShow] = useState(false)
     const [redirect, setRedirect] = useState(false)
-    const [assignment, setAssignment] = useState([])
+    const [assignmentforgrade, setAssignmentforgrade] = useState([])
     const submitassignmentdata = useSelector(state => state.assignmentsubmit.fetchlogs)
     const submitassignmentstatus = useSelector(state => state.assignmentsubmit.fetchstatus)
+    const fetchassignmentgrade = useSelector(state => state.grade.fetchgrade)
+    const fetchassignmentstatus = useSelector(state => state.grade.fetchgradestatus)
     const student = useSelector(state => state.student.student)
     const user = useSelector(state => state.user.user)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
+        fetchAssignmentGrade()
         fetchSubmitAssignment()
         fetchUser()
         fetchStudent()
@@ -42,10 +49,17 @@ const AssignedAssignmentTable = (props) => {
             if (props.from === 'student') {
                 dispatch(SubmitAssignmentFetch(access, localStorage.getItem('user_id'), null))
             } else if (props.from === 'teacher' && click) {
-                console.log(click, assignment_id)
                 dispatch(SubmitAssignmentFetch(access, null, assignment_id))
             }
+        } else {
+            setRedirect(true)
+        }
+    }
 
+    const fetchAssignmentGrade = async () => {
+        const access = await Refresh()
+        if (access !== null && access !== undefined) {
+            dispatch(FetchSubmitAssignmentGrade(access))
         } else {
             setRedirect(true)
         }
@@ -78,23 +92,19 @@ const AssignedAssignmentTable = (props) => {
     }
 
     const OpenModal = (value, assignment = "") => {
-        console.log("hello")
         setShow(value)
         setAssignment(assignment)
     }
 
     const assignmentcreate = useMemo(() => {
         let assignmentcreatevalue = props.createassignmentdata.data
-        console.log(assignmentcreatevalue)
         if (props.from === 'student') {
             if (assignmentcreatevalue !== undefined && submitassignmentdata.data !== undefined) {
 
                 if (assignmentcreatevalue.length > 0 && submitassignmentdata.data.length > 0) {
 
                     assignmentcreatevalue = assignmentcreatevalue.filter(assign => {
-                        console.log("hell")
-                        console.log(assign.id)
-
+                    
                         return !submitassignmentdata.data.find(submit => {
                             return submit.assignment === assign.id
                         })
@@ -117,7 +127,6 @@ const AssignedAssignmentTable = (props) => {
     const showMore = (id) => {
         let index = []
         index = assignId.slice()
-        console.log(index)
         if (index[0] === id) {
             index.pop()
             index.push(0)
@@ -131,14 +140,10 @@ const AssignedAssignmentTable = (props) => {
     }
 
     const filterStudent = (submit_student) => {
-        console.log("submit")
-        console.log(submit_student)
         if (student.data !== undefined && user.data !== undefined) {
 
             if (student.data.data.length > 0 && user.data.data.length > 0) {
-                console.log("j")
                 const stds = student.data.data.filter(std => std.id === submit_student)
-                console.log(stds)
                 if (stds[0] && stds.length === 1) {
                     const std_detail = user.data.data.filter(usr => usr.id === stds[0].student)
                     return [std_detail, stds]
@@ -147,10 +152,60 @@ const AssignedAssignmentTable = (props) => {
         }
     }
 
+    const GradeValue = (assignment_id, from='student') => {
+        if (from === 'student'){
+        if (fetchassignmentgrade.data !== undefined) {
+        if (fetchassignmentgrade.data.length > 0) {
+          const grade = fetchassignmentgrade.data.filter(grade => grade.assignment === assignment_id.id)
+          if (grade.length === 1) {
+              const gradeval= grade[0].assignment_grade
+              if (gradeval === 'A' || gradeval === 'A+'){
+               return <span style={{color:"green"}}>{gradeval}</span>
+              }
+              if (gradeval === 'B' || gradeval === 'B+'){
+                return <span style={{color:"blue"}}>{gradeval}</span>
+               }
+               if (gradeval === 'C' || gradeval === 'C+' || gradeval === 'D' || gradeval === 'D+'){
+                return <span style={{color:"orange"}}>{gradeval}</span>
+               }
+               if (gradeval === 'F' || gradeval === 'F+'){
+                return <span style={{color:"red"}}>Fail</span>
+               }
+          } else {
+              return <span style={{color:"grey"}}>Grade not assigned</span>
+          }
+        }else{
+            return <span style={{color:"grey"}}>Grade not assigned</span>
+        }
+    }else{
+        return <span style={{color:"grey"}}>Grade not assigned</span>
+    } 
+ } else {
+     if(fetchassignmentgrade.data !== undefined) {
+      if (fetchassignmentgrade.data.length > 0) {
+        const grade = fetchassignmentgrade.data.filter(grade => grade.assignment === assignment_id.id)
+        if (grade.length === 1){
+            return 1
+        } else {
+            return 0
+        }
+      } else {
+          return 0
+      }
+     } else {
+         return 0
+     }
+ }
+    }
+
+    const gradeModal = (value, assign) => {
+        setOpen(value)
+        setAssignmentforgrade(assign)
+    }
+
     const CalculateDeadline = (assign, from) => {
         const current = new Date(Date.now())
         const deadline = new Date(assign.deadline)
-        console.log(current, deadline)
         const diffdate = deadline - current
         const diffday = Math.floor(Math.abs(diffdate) / (1000*60*60*24))
         const diffhours = Math.floor(Math.abs(diffdate)/(1000*60*60)) 
@@ -181,6 +236,10 @@ const AssignedAssignmentTable = (props) => {
         }
     }
 
+if (redirect) {
+    return <Navigate to='/login'/>
+}else{
+
     return (
         <div >
             {assignmentcreate !== undefined && <Table responsive style={{border:"1px solid #dee2e6"}} bordered>
@@ -207,7 +266,7 @@ const AssignedAssignmentTable = (props) => {
                                     {props.from === 'student' && <td>{CalculateDeadline(assign, 'deadline')}</td>}
                                 </tr>
                                 {props.from === 'teacher' && <tr>
-                                    {(submitassignmentdata !== undefined && submitassignmentdata.data !== undefined && submitassignmentdata.data !== null && assignId[0] === assign.id) ?
+                                    {(submitassignmentdata !== undefined && submitassignmentdata.data !== undefined &&  submitassignmentdata.data !== null && assignId[0] === assign.id) ?
                                         <td colSpan="4">
                                             <Table responsive bordered>
                                                 <thead style={theadStyle}>
@@ -216,13 +275,13 @@ const AssignedAssignmentTable = (props) => {
                                                         <th>Roll No</th>
                                                         <th>Assignment</th>
                                                         <th>Submitted Date</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 {(submitassignmentdata.data).length > 0 ? <tbody style={tbodyStyle}>
                                                     {submitassignmentdata.data.map((assign, index) => {
-                                                        console.log(assign)
                                                         const [user, student] = filterStudent(assign.student_submit)
-                                                        console.log(student, user)
+                                                        const grade = GradeValue(assign, 'teacher')
                                                         DateConverison(assign.deadline)
                                                         return (
                                                             <tr key={index}>
@@ -230,6 +289,7 @@ const AssignedAssignmentTable = (props) => {
                                                                 <td>{(student[0].roll_no)}</td>
                                                                 <td><a href={assign.assignment_pdf_submit} target="_blank" style={{ color: "black" }}>Show Assignment</a></td>
                                                                 <td>{DateConverison(assign.submited_date)}</td>
+                                                                {grade === 0 ? <td><Badge style={{ cursor: "pointer" }} color="primary" onClick={() => gradeModal(!open,assign)}>Assign Grade</Badge></td>:<td><Badge color="primary">Grade Assigned</Badge></td>}
                                                             </tr>
                                                         )
                                                     })
@@ -247,22 +307,23 @@ const AssignedAssignmentTable = (props) => {
                         : props.createassignmentstatus === 400 ? <p>Error!</p> : <Loading />}
             </tbody>
             </Table>}
-            {props.from === 'student' && <div>
+            {props.from === 'student' && <div style={{paddingTop:"2rem"}}>
                 <h6>Submitted Assignment</h6>
-                {submitassignmentdata.data !== undefined && <Table responsive bordered>
+                {submitassignmentdata.data !== undefined && fetchassignmentgrade !== undefined && <Table responsive bordered>
                     <thead style={theadStyle}>
                         <tr>
                             <th>Assignment</th>
                             <th>Submitted Date</th>
+                            <th>Grade</th>
                         </tr>
                     </thead>
                     {submitassignmentdata.data.length > 0 ? <tbody style={tbodyStyle}>
                         {submitassignmentdata.data.map((assign, index) => {
-                            DateConverison(assign.deadline)
                             return (
                                 <tr key={index}>
                                     <td><a href={assign.assignment_pdf_submit} target="_blank" style={{ color: "black" }}>Show Assignment</a></td>
                                     <td>{DateConverison(assign.submited_date)}</td>
+                                    <td>{GradeValue(assign)}</td>
                                 </tr>
                             )
                         })
@@ -273,8 +334,10 @@ const AssignedAssignmentTable = (props) => {
                 </Table>}
             </div>}
             <SubmitAssignmentModal openModal={OpenModal} show={show} assignment={assignment} fetchSubmitAssignment={fetchSubmitAssignment}/>
+            <SubmitGrade openModal={gradeModal} open={open} assignment={assignmentforgrade} fetchAssignmentGrade={fetchAssignmentGrade}/>
         </div>
     )
+                    }
 }
 
 export default AssignedAssignmentTable

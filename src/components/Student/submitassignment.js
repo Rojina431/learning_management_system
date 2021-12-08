@@ -84,7 +84,6 @@ const SubmitAssignmentModal = (props) => {
      }
     }
 
-    console.log(props.assignment)
 
     if (redirect) {
         return <Navigate to='/login'/>
