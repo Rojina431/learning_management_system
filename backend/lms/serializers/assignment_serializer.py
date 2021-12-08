@@ -10,3 +10,8 @@ class AssignmentSubmitSerializer(serializers.ModelSerializer):
     class Meta:
          model = assignmentmodel.AssignmentSubmit
          fields = ['id','student_submit','assignment_pdf_submit','assignment','is_submitted','submited_date']     
+
+class AssignmentGradeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = assignmentmodel.AssignmentGrade
+        fields = ['assignment', 'assignment_grade']         

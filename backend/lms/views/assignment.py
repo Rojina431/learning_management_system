@@ -63,4 +63,14 @@ class SingleAssignmentSubmit(GenericAPIView,mixins.RetrieveModelMixin,mixins.Upd
         return self.destroy(request,*args,**kwargs)
 
     def patch(self, request, *args, **kwargs):
-        return self.partial_update(request,*args,**kwargs)                        
+        return self.partial_update(request,*args,**kwargs)   
+
+class AssignmentGrade(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+    serializer_class = assignment_serializer.AssignmentGradeSerializer
+    queryset = assignmentmodel.AssignmentGrade.objects.all()
+    permission_classes = [IsAuthenticated]
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs) 
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)                                

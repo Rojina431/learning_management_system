@@ -20,4 +20,19 @@ class AssignmentSubmit(models.Model):
     submited_date = models.DateTimeField(auto_now=True)
     is_submitted = models.BooleanField()
 
+class AssignmentGrade(models.Model):
+    grade_choices = [
+         ('A+', 'A+'),
+         ('A', 'A'),
+         ('B+', 'B+'),
+         ('B', 'B'),
+         ('C+', 'C+'),
+         ('C', 'C'),
+         ('D+', 'D+'),
+         ('D', 'D'),
+         ('F', 'Fail'),
+    ]
+    assignment = models.OneToOneField(AssignmentSubmit, on_delete=models.CASCADE)
+    assignment_grade = models.CharField(choices=grade_choices, max_length=10)    
+
   

@@ -17,5 +17,6 @@ urlpatterns = [
     path('assignment_create/<int:pk>',assignment.SingleAssignmentCreate.as_view()),
     path('assignment_submit/',assignment.AssignmentSubmit.as_view()),
     path('assignment/<int:pk>',assignment.SingleAssignmentSubmit.as_view()),
+    path('assignment/grade/',assignment.AssignmentGrade.as_view()),
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh')
 ]
