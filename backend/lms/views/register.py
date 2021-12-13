@@ -36,14 +36,13 @@ def Login(request):
     if user[0].role == 'student':
       student = usermodel.Student.objects.filter(student = user[0].id)
       if student:
-        return Response({"data":serializer.data,"success":True,"user_id":student[0].id,"student_class":student[0].student_class,"teacher_class":"","roll_no":student[0].roll_no},status=status.HTTP_200_OK)   
+        return Response({"data":serializer.data,"success":True,"user_id":student[0].id, "name":user[0].first_name + " " + user[0].last_name , "student_class":student[0].student_class,"teacher_class":"","roll_no":student[0].roll_no},status=status.HTTP_200_OK)   
       else :
         return Response({"error":{"details":"Student not registered"},"success":False},status=status.HTTP_401_UNAUTHORIZED)   
     else:
       teacher = usermodel.Teacher.objects.filter(teacher = user[0].id)
       if teacher:
-        
-        return Response({"data":serializer.data,"success":True,"user_id":teacher[0].id,"student_class":"","teacher_class":teacher[0].teacher_class,"roll_no":""},status=status.HTTP_200_OK)   
+        return Response({"data":serializer.data,"success":True,"user_id":teacher[0].id, "name":user[0].first_name + " " + user[0].last_name ,"student_class":"","teacher_class":teacher[0].teacher_class,"roll_no":""},status=status.HTTP_200_OK)   
       else:
           return Response({"error":{"details":"Teacher not registered"},"success":False},status=status.HTTP_401_UNAUTHORIZED)    
 
@@ -56,6 +55,14 @@ def Users(request):
   user = usermodel.User.objects.all()
   serializer = user_serializer.UserSerializer(user, many=True)
   return Response({"data":serializer.data, "success":True}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def GetUserById(request, pk):
+  user = usermodel.User.objects.filter(id = pk)
+  serializer = user_serializer.UserSerializer(user)
+  return Response({"data":serializer.data, "success":True}, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
