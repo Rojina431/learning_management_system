@@ -3,9 +3,9 @@ import { useDispatch,useSelector } from "react-redux"
 import { Navigate, useLocation } from "react-router"
 import { FetchSubject } from "../../redux/action/subjectaction"
 import Loading from "../loading"
+import NavbarComponent from "../navbar"
 import Refresh from "../refresh"
 import TeacherSidebarComponent from "../teachersidebar"
-import AssignmentCreateComponent from "./assignmentcreate"
 import SubjectComponent from "./subject"
 
 const TeacherComponent = (props) => {
@@ -34,12 +34,15 @@ const TeacherComponent = (props) => {
     <div className="sidebar">
     <TeacherSidebarComponent/>
     </div>
+    <div className="body">
+    <NavbarComponent/>
     {subjectdata.data !== undefined && <div>    
     {subjectdata.data.length > 0 ? <div><SubjectComponent subjectdata={subjectdata} subjectstatus={subjectstatus} grade={location.state.grade}/> 
     
     </div> : subjectdata.data.length === 0 && subjectstatus === 200 ? <p style={{textAlign:"center", padding:"10px"}}>No any subject assigned for this class yet!</p> : 
     subjectstatus === 400 ? <p>Error!</p> : <Loading/>} 
     </div>}
+    </div>
     </div>
     )
 }

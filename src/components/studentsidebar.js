@@ -17,7 +17,7 @@ const SidebarComponent = () => {
     const [redirect , setRedirect] = useState(false)
     const subjectdata = useSelector(state=>state.subject.logs)
     const subjectstatus = useSelector(state =>state.subject.status)
-    const [access,setAccess] = useState(localStorage.getItem('access') !== null || localStorage.getItem('access') !== undefined ? "True" : "False")
+   
     const {height, width}  = useWindowsDimensions()
     console.log(width)
     const dispatch = useDispatch()

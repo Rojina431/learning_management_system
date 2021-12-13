@@ -55,7 +55,6 @@ export const CreateAssignmentUpdate = (id, token,body) => async(dispatch) => {
 }
 
 export const CreateAssignmentFetch = (token, teacher=null, subject=null) => async(dispatch) => {
-    console.log("hi")
     let url = ""
     if (teacher !== null && subject !== null){
         url = `?subject_teacher=${teacher}&subject_create=${subject}`

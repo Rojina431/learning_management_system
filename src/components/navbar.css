@@ -1,0 +1,29 @@
+.nav{
+    background-image: linear-gradient(to right, #072f5f, #3895d3 ) !important;
+    
+    border-radius: 0.2rem !important;
+    position: sticky;
+}
+
+.ms-auto{
+    color: white;
+    padding:0.5rem 0.5rem 0.5rem 0rem;
+}
+
+.userName{
+    text-align: center;
+}
+
+.userName span{
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.userName span::after{
+    content: '\a';
+    white-space: pre !important;
+}
+
+.userName small{
+    font-size: 0.8rem;
+}

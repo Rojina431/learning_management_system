@@ -9,6 +9,8 @@ const Remove = () => {
     localStorage.removeItem('status')
     localStorage.removeItem('user_id')
     localStorage.removeItem('roll_no')
+    localStorage.removeItem('user_name')
+    localStorage.removeItem('email')
 }
 
 const Refresh = async() => {

@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react"
-import { Check, X } from "react-feather"
 import { useDispatch, useSelector } from "react-redux"
 import { Navigate } from "react-router"
 import { Badge, Table } from "reactstrap"
@@ -259,7 +258,7 @@ if (redirect) {
                             <>
                                 <tr>
                                     <td>{assign.title}</td>
-                                    <td><a href={assign.assignment_pdf_create} target="_blank" style={{ color: "black" }}>Show Assignment</a></td>
+                                    <td><a href={assign.assignment_pdf_create} target="_blank"  rel="noreferrer" style={{ color: "black" }}>Show Assignment</a></td>
                                     <td>{DateConverison(assign.deadline)}</td>
                                     {props.from === 'teacher' && <td><Badge style={{ cursor: "pointer" }} color="success" onClick={() => showMore(assign.id)}>Show Submitted</Badge></td>}
                                     {props.from === 'student' && <td>{CalculateDeadline(assign, 'submit')}</td>}
@@ -287,7 +286,7 @@ if (redirect) {
                                                             <tr key={index}>
                                                                 <td>{user[0].first_name} {user[0].last_name}</td>
                                                                 <td>{(student[0].roll_no)}</td>
-                                                                <td><a href={assign.assignment_pdf_submit} target="_blank" style={{ color: "black" }}>Show Assignment</a></td>
+                                                                <td><a href={assign.assignment_pdf_submit} target="_blank" rel="noreferrer"  style={{ color: "black" }}>Show Assignment</a></td>
                                                                 <td>{DateConverison(assign.submited_date)}</td>
                                                                 {grade === 0 ? <td><Badge style={{ cursor: "pointer" }} color="primary" onClick={() => gradeModal(!open,assign)}>Assign Grade</Badge></td>:<td><Badge color="primary">Grade Assigned</Badge></td>}
                                                             </tr>
@@ -321,7 +320,7 @@ if (redirect) {
                         {submitassignmentdata.data.map((assign, index) => {
                             return (
                                 <tr key={index}>
-                                    <td><a href={assign.assignment_pdf_submit} target="_blank" style={{ color: "black" }}>Show Assignment</a></td>
+                                    <td><a href={assign.assignment_pdf_submit} target="_blank" rel="noreferrer"  style={{ color: "black" }}>Show Assignment</a></td>
                                     <td>{DateConverison(assign.submited_date)}</td>
                                     <td>{GradeValue(assign)}</td>
                                 </tr>

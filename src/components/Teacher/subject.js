@@ -1,5 +1,4 @@
 import { ArrowRightCircle } from "react-feather"
-import Loading from "../loading"
 import AssignmentCreateComponent from "./assignmentcreate"
 const SubjectComponent = (props) => {
 
@@ -18,7 +17,7 @@ const SubjectComponent = (props) => {
     
   return(
     <div className="body">
-    <h2 style={{textAlign:"center" , color:"#0d6efd"}}>Class {ClassLabel[props.grade]}</h2>
+    <h2 style={{textAlign:"center" , color:"#3895d3"}}>Class {ClassLabel[props.grade]}</h2>
     <div className="subject">
         { props.subjectdata.data.map((sub,index) => {
           return (

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Navigate } from "react-router"
 import { Modal, Form, ModalHeader, ModalFooter, Button, Label, Input } from "reactstrap"
-import { AssignmentSubmit, SubmitAssignmentUpdate } from "../../redux/action/assignmentaction"
+import { AssignmentSubmit } from "../../redux/action/assignmentaction"
 import MoreErrorHandling from "../moreerrorhandling"
 import Refresh from "../refresh"
 
@@ -34,7 +34,6 @@ const SubmitAssignmentModal = (props) => {
         }
         } else {
             toggleOpen()
-            // fileRef.current.value = ''
         }
 
     }, [assignmentsubmitdata, assignmentsubmitstatus])   
@@ -65,19 +64,16 @@ const SubmitAssignmentModal = (props) => {
      setLoading(true)   
      const access = await Refresh()
      if (access !== null && access !== undefined) {
-        //  if (file.length > 0){
             const formdata = new FormData()
             formdata.append("assignment_pdf_submit", file)
             formdata.append('assignment', props.assignment.id)
             formdata.append('student_submit', localStorage.getItem("user_id"))
             formdata.append('is_submitted',true)
             dispatch(AssignmentSubmit(formdata, access))
-            // dispatch(SubmitAssignmentUpdate(props.assignment.id, access, {"is_submitted":true}))
             props.fetchSubmitAssignment()
             toggleOpen(true)
             setLoading(false)
             setFile([])
-         //}
      } else {
        setRedirect(true)
        setLoading(false)

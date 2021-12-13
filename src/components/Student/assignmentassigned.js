@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Navigate } from "react-router"
-import { Table } from "reactstrap"
 import { CreateAssignmentFetch } from "../../redux/action/assignmentaction"
 import AssignedAssignmentTable from "../Common/assignedassignmenttaable"
 import Refresh from "../refresh"

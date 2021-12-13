@@ -3,9 +3,9 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import {BookOpen, LogOut} from 'react-feather'
 import './sidebar.css'
 import { useEffect, useState } from 'react';
-import { Link,Navigate,useNavigate } from 'react-router-dom';
+import { Link,Navigate } from 'react-router-dom';
 import useWindowsDimensions from './windowsdimensions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { LogoutUser } from '../redux/action/signupaction';
 
 const TeacherSidebarComponent = () => {
@@ -19,7 +19,6 @@ const TeacherSidebarComponent = () => {
     const [Access,setAccess] = useState(localStorage.getItem('access') !== null || localStorage.getItem('access') !== undefined ? "True" : "False")
     const {height, width}  = useWindowsDimensions()
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     useEffect(() => {
        if(width < 800){
          setIsCollapse(true)
