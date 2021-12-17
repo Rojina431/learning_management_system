@@ -4,7 +4,7 @@ import {
 } from '../actiontype'
 
 const initialState = {
-    logs : [],
+    fetchlogs : [],
     status : null
 }
 
@@ -13,13 +13,13 @@ export default function SubjectReducer(state=initialState, action){
         case SubjectFetchSuccess:
             return{
                 ...state,
-                logs:action.payload,
+                fetchlogs:action.payload,
                 status:200
             }
         case SubjectFetchFailed:
             return{
                 ...state,
-                logs:action.payload,
+                fetchlogs:action.payload,
                 status:400
             }   
         default:

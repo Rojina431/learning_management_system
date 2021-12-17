@@ -5,10 +5,31 @@
     position: sticky;
 }
 
-.ms-auto{
+.ms-auto, .ml-auto{
     color: white;
-    padding:0.5rem 0.5rem 0.5rem 0rem;
+    padding:0.5rem 0.5rem 0.5rem 0.5rem;
 }
+
+.ml-auto {
+    display: inline-block;
+    letter-spacing: 0.055rem;
+    cursor: pointer;
+  }
+  
+  .ml-auto::after {
+    content: '';
+    width: 0px;
+    height: 1px;
+    display: block;
+    background: white;
+    transition: 300ms;
+    margin-top: -0.7rem;
+  }
+  
+  .ml-auto:hover::after {
+    width: 100%;
+  }
+
 
 .userName{
     text-align: center;

@@ -11,7 +11,7 @@ import SubjectComponent from "./subject"
 const TeacherComponent = (props) => {
     const dispatch = useDispatch()
     const location = useLocation()
-    const subjectdata = useSelector(state=>state.subject.logs)
+    const subjectdata = useSelector(state=>state.subject.fetchlogs)
     const subjectstatus = useSelector(state =>state.subject.status)
     const [redirect , setRedirect] = useState(false)
     useEffect(() => {
@@ -36,7 +36,7 @@ const TeacherComponent = (props) => {
     </div>
     <div className="body">
     <NavbarComponent/>
-    {subjectdata.data !== undefined && <div>    
+    {subjectdata !== undefined && subjectdata.data !== undefined && <div>    
     {subjectdata.data.length > 0 ? <div><SubjectComponent subjectdata={subjectdata} subjectstatus={subjectstatus} grade={location.state.grade}/> 
     
     </div> : subjectdata.data.length === 0 && subjectstatus === 200 ? <p style={{textAlign:"center", padding:"10px"}}>No any subject assigned for this class yet!</p> : 

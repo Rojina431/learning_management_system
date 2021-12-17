@@ -137,6 +137,7 @@ const AssignedAssignmentTable = (props) => {
             fetchSubmitAssignment(true, id)
         }
     }
+    
 
     const filterStudent = (submit_student) => {
         if (student.data !== undefined && user.data !== undefined) {
@@ -150,6 +151,7 @@ const AssignedAssignmentTable = (props) => {
             }
         }
     }
+
 
     const GradeValue = (assignment_id, from='student') => {
         if (from === 'student'){
@@ -253,14 +255,14 @@ if (redirect) {
                 </thead>
                 <tbody style={tbodyStyle}>
                 {assignmentcreate.length > 0 ? assignmentcreate.map((assign, index) => {
-                    
+                    console.log('hello')
                     return (
                             <>
                                 <tr>
                                     <td>{assign.title}</td>
                                     <td><a href={assign.assignment_pdf_create} target="_blank"  rel="noreferrer" style={{ color: "black" }}>Show Assignment</a></td>
                                     <td>{DateConverison(assign.deadline)}</td>
-                                    {props.from === 'teacher' && <td><Badge style={{ cursor: "pointer" }} color="success" onClick={() => showMore(assign.id)}>Show Submitted</Badge></td>}
+                                    {props.from === 'teacher' && <td><Badge style={{ cursor: "pointer" }} color="info" onClick={() => showMore(assign.id)}>{assignId[0] === assign.id ? "Hide Submitted" : "Show Submitted"}</Badge></td>}
                                     {props.from === 'student' && <td>{CalculateDeadline(assign, 'submit')}</td>}
                                     {props.from === 'student' && <td>{CalculateDeadline(assign, 'deadline')}</td>}
                                 </tr>
@@ -288,7 +290,7 @@ if (redirect) {
                                                                 <td>{(student[0].roll_no)}</td>
                                                                 <td><a href={assign.assignment_pdf_submit} target="_blank" rel="noreferrer"  style={{ color: "black" }}>Show Assignment</a></td>
                                                                 <td>{DateConverison(assign.submited_date)}</td>
-                                                                {grade === 0 ? <td><Badge style={{ cursor: "pointer" }} color="primary" onClick={() => gradeModal(!open,assign)}>Assign Grade</Badge></td>:<td><Badge color="primary">Grade Assigned</Badge></td>}
+                                                                {grade === 0 ? <td><Badge style={{ cursor: "pointer" }} color="primary" onClick={() => gradeModal(!open,assign)}>Assign Grade</Badge></td>:<td><Badge color="success">Grade Assigned</Badge></td>}
                                                             </tr>
                                                         )
                                                     })
