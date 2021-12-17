@@ -10,6 +10,7 @@ import useWindowsDimensions from './windowsdimensions';
 import { FetchSubject } from '../redux/action/subjectaction';
 import { LogoutUser } from '../redux/action/signupaction';
 import Refresh from './refresh';
+import { SiGotomeeting } from 'react-icons/si'
 
 const SidebarComponent = () => {
 
@@ -73,6 +74,9 @@ if (redirect) {
          {subjectdata.detail}
        </MenuItem>:<MenuItem>No related subject!</MenuItem>:<MenuItem className="error">{subjectdata.detail}</MenuItem>}
        
+      </SubMenu>
+      <SubMenu title="Meeting" icon={<SiGotomeeting/> }>
+      <MenuItem>Show Meetings <Link to='/teacher/meeting'/></MenuItem>
       </SubMenu>
       </SidebarContent>
     </Menu>

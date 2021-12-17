@@ -1,11 +1,15 @@
 import {
     SubmitMeetingScheduleSuccess,
-    SubmitMeetingScheduleFailed
+    SubmitMeetingScheduleFailed,
+    FetchMeetingScheduleSuccess,
+    FetchMeetingScheduleFailed
 } from '../actiontype'
 
 const initialState = {
     submitlogs:[],
-    submitstatus:null
+    submitstatus:null,
+    fetchlogs:[],
+    fetchstatus:null
 }
 
 export default function ScheduleMeetingReducer(state=initialState, action){
@@ -21,7 +25,19 @@ export default function ScheduleMeetingReducer(state=initialState, action){
                 ...state,
                 submitlogs:action.payload,
                 submitstatus:400
-            }   
+            } 
+        case FetchMeetingScheduleSuccess:
+            return {
+                ...state,
+                fetchlogs:action.payload,
+                fetchsubmitstatus:200
+                }
+        case FetchMeetingScheduleFailed:
+            return {
+                ...state,
+                fetchlogs:action.payload,
+                fetchstatus:400
+                }      
         default:
             return state     
     }

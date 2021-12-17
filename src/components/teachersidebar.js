@@ -7,6 +7,7 @@ import { Link,Navigate } from 'react-router-dom';
 import useWindowsDimensions from './windowsdimensions';
 import { useDispatch } from 'react-redux';
 import { LogoutUser } from '../redux/action/signupaction';
+import { SiGotomeeting } from 'react-icons/si';
 
 const TeacherSidebarComponent = () => {
 
@@ -66,6 +67,9 @@ if (Access === "True"){
          <MenuItem key={index}>{ClassLabel[grade]}<Link to="/teacher/subject" state={{ fromDashboard: "hello",grade:grade }}/></MenuItem>))
          :<MenuItem>No related subject!</MenuItem>}
        
+      </SubMenu>
+      <SubMenu title="Meeting" icon={<SiGotomeeting/> }>
+      <MenuItem>Show Meetings <Link to='/teacher/meeting'/></MenuItem>
       </SubMenu>
       </SidebarContent>
     </Menu>
