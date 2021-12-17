@@ -30,7 +30,7 @@ export default function ScheduleMeetingReducer(state=initialState, action){
             return {
                 ...state,
                 fetchlogs:action.payload,
-                fetchsubmitstatus:200
+                fetchstatus:200
                 }
         case FetchMeetingScheduleFailed:
             return {

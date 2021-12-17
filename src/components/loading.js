@@ -1,9 +1,9 @@
-import { Loader } from "react-feather"
+import { Spinner } from "reactstrap"
 
 const Loading = () => {
     return(
-        <div style={{position:"fixed",left:"50%",top:"50%"}}>
-            <Loader/>
+        <div style={{position:"fixed",left:"60%",top:"50%", color:"blue"}}>
+            <Spinner/>
         </div>
     )
 }

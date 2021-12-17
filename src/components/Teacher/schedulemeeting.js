@@ -65,6 +65,7 @@ const ScheduleMeetingForm = (props) => {
     }
 
     useEffect(() => {
+    setstatus(false)
      const fetchSubject = async() => {
          const token = await Refresh()
          if (token !== null && token !== undefined) {
