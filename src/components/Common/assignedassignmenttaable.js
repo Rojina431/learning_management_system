@@ -84,10 +84,15 @@ const AssignedAssignmentTable = (props) => {
 
 
     const DateConverison = (time) => {
-        const months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
+        
         const dateObj = new Date(time)
-        const date = dateObj.getDate() + ' ' + months[dateObj.getMonth()] + ' ' + dateObj.getFullYear() + ' ' + dateObj.getHours() + ':' + dateObj.getMinutes() + ':' + dateObj.getSeconds()
-        return date
+       
+        const date = dateObj.toLocaleString([],
+            {
+                dateStyle:"full",
+                timeStyle:"medium"
+            })
+            return date
     }
 
     const OpenModal = (value, assignment = "") => {

@@ -13,12 +13,12 @@ const ScheduleMeetingForm = (props) => {
     const dispatch = useDispatch()
     const [redirect, setRedirect] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [meetingdetails, setmeetingdetails] = useState({"meeting_title":"", "meeting_url":"", "teacher_created":localStorage.getItem('user_id'), "meeting_subject":null})
+    const [meetingdetails, setmeetingdetails] = useState({"meeting_title":"", "meeting_start":"", "meeting_duration":"", "teacher_created":localStorage.getItem('user_id'), "meeting_subject":null})
     const subjectdata = useSelector(state => state.subject.fetchlogs)
     const submitmeetingdata = useSelector(state => state.meeting.submitlogs)
     const submitmeetingstatus = useSelector(state => state.meeting.submitstatus)
     const [status, setstatus] = useState(false)
-    const [submitmeetingerror, setsubmitmeetingerror] = useState({"subjecterr":"", "titleerr":"", "urlerr":""})
+    const [submitmeetingerror, setsubmitmeetingerror] = useState({"subjecterr":"", "titleerr":"", "datetimeerr":"", "timeerr":""})
 
     useEffect(() => {
       if (submitmeetingstatus === 400) {
@@ -28,15 +28,17 @@ const ScheduleMeetingForm = (props) => {
           if (err.meeting_subject !== "") {
             setsubmitmeetingerror(prevState => ({...prevState, "subjecterr":err.meeting_subject[0]}))
           }
-          if (err.meeting_url !== "") {
-              setsubmitmeetingerror(prevState => ({...prevState, "urlerr": err.meeting_url[0]}))
+          if (err.meeting_start !== "") {
+              setsubmitmeetingerror(prevState => ({...prevState, "datetimeerr": err.meeting_start[0]}))
           }
+          if (err.meeting_duration !== "") {
+            setsubmitmeetingerror(prevState => ({...prevState, "titleerr":err.meeting_duration[0]}))
+        }
           if (err.meeting_title !== "") {
               setsubmitmeetingerror(prevState => ({...prevState, "titleerr":err.meeting_title[0]}))
           }
       } else {
           setstatus(true)
-          console.log(submitmeetingdata, submitmeetingstatus)
           toggleModal(false)
          const timeout = setTimeout(() => {
              setstatus(false)  
@@ -47,20 +49,22 @@ const ScheduleMeetingForm = (props) => {
 
     const toggleModal = (value) => {
       props.OpenModal(value)
-      setmeetingdetails({"meeting_title":"", "meeting_url":"", "teacher_created":localStorage.getItem('user_id'), "meeting_subject":null})
+      setmeetingdetails({"meeting_title":"", "meeting_start":"", "meeting_duration":"",  "teacher_created":localStorage.getItem('user_id'), "meeting_subject":null})
       setLoading(false)
-      setsubmitmeetingerror({"subjecterr":"", "titleerr":"", "urlerr":""})
+      setsubmitmeetingerror({"subjecterr":"", "titleerr":"", "datetimeerr":"", "timeerr":""})
     }
 
+    console.log(meetingdetails)
+
     const handleSubjectChange = (value) => {
-        setsubmitmeetingerror({"subjecterr":"", "titleerr":"", "urlerr":""})
+        setsubmitmeetingerror({"subjecterr":"", "titleerr":"", "datetimeerr":"", "timeerr":""})
         if (value !== undefined && value !== null) {
            setmeetingdetails(prevState => ({...prevState, "meeting_subject":value.value}))  
         }
     }
 
     const handleChange = (e) => {
-        setsubmitmeetingerror({"subjecterr":"", "titleerr":"", "urlerr":""})
+        setsubmitmeetingerror({"subjecterr":"", "titleerr":"", "datetimeerr":"", "timeerr":""})
         setmeetingdetails(prevState => ({...prevState, [e.target.name]:e.target.value}))
     }
 
@@ -101,9 +105,12 @@ const ScheduleMeetingForm = (props) => {
                   <Label>Meeting Title</Label>
                   <Input type="text" placeholder="title" onChange={handleChange} name="meeting_title"/>
                   {submitmeetingerror.titleerr !== "" && <p className="error">{submitmeetingerror.titleerr}</p>}
-                  <Label>Meeting URL</Label>
-                  <Input type="url" placeholder="meeting url" onChange={handleChange} name="meeting_url"/>
-                  {submitmeetingerror.urlerr !== "" && <p className="error">{submitmeetingerror.urlerr}</p>}
+                  <Label>Meeting Start</Label>
+                  <Input type="datetime-local" placeholder="meeting start" onChange={handleChange} name="meeting_start"/>
+                  {submitmeetingerror.datetimeerr !== "" && <p className="error">{submitmeetingerror.datetimeerr}</p>}
+                  <Label>Meeting Duration</Label>
+                  <Input type="number" placeholder="enter in minutes" onChange={handleChange} name="meeting_duration"/>
+                  {submitmeetingerror.timeerr !== "" && <p className="error">{submitmeetingerror.timeerr}</p>}
                   <Label>Subject</Label>
                   {subjectdata !== undefined && <SubjectSelect handleSubjectChange={handleSubjectChange} value={meetingdetails.meeting_subject} subject={subjectdata.data}/>}
                   {submitmeetingerror.subjecterr !== "" && <p className="error">{submitmeetingerror.subjecterr}</p>}

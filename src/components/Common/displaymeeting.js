@@ -38,8 +38,18 @@ const DisplayMeeting = (props) => {
         }
     }
  
-    console.log(props.meeting.data)
-    console.log(props.meeting.data.data.length,props.meeting_status)
+    const DateConverison = (time) => {
+        const dateObj = new Date(time)
+        const d = dateObj.toLocaleString([], {
+            
+            dateStyle:'full',
+            timeStyle:'medium'
+        })
+        return d
+    }
+
+   
+
     if (redirect) {
        return <Navigate to='/login'/>
     } else {
@@ -49,7 +59,12 @@ const DisplayMeeting = (props) => {
                 return (
                      <div key={index} style={{marginBottom:"0.4rem"}}>
                      <div onClick={() => OpenData(meet.id, meet.teacher_created)} style={{cursor:"pointer"}}>{meet.id === meetingindex[0] ? <FiChevronDown/> : <FiChevronRight/>} <span style={{textTransform:"capitalize"}}>{meet.meeting_title}</span></div>
-                     {meet.id === meetingindex[0] && subject !== undefined & subject.data.length === 1 ? <a href={meet.meeting_url} target="_blank">Join {subject.data[0].subject_name} Class</a> : <div></div>}
+                     {meet.id === meetingindex[0] && subject !== undefined & subject.data.length === 1 ? 
+                     <div>
+                     <a href={props.from === 'teacher' ? meet.meeting_start_url : meet.meeting_join_url} target="_blank">Join {subject.data[0].subject_name} Class</a> 
+                     <p>Starting at: {DateConverison(meet.meeting_start)}</p>
+                     
+                     </div>: <div></div>}
                      </div>
                 )
             }) : props.meeting.data.data.length === 0 && props.meeting_status === 200 ? <p style={{position:'fixed', left:"60%"}}>No meeting scheduled!</p> : <Loading/>

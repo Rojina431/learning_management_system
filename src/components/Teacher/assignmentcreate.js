@@ -35,7 +35,7 @@ const AssignmentCreateComponent = (props) => {
         }
     }
 
-  
+  console.log(createassignmentdata)
 
     const OpenModal = (value) => {
       setShow(value)

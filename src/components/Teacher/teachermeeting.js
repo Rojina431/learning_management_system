@@ -26,7 +26,7 @@ const TeacherMeeting = () => {
       fetchScheduledMeeting()
     }, [])
 
-    console.log(meetingdata.data)
+    console.log(meetingdata)
 
     if (redirect) {
         return <Navigate to='/login'/>
@@ -38,7 +38,7 @@ const TeacherMeeting = () => {
             </div>
             <div className="body">
               <NavbarComponent/>
-              {meetingdata.data !== undefined && <DisplayMeeting meeting={meetingdata} meeting_status={meetingstatus}/>}
+              {meetingdata.data !== undefined && <DisplayMeeting meeting={meetingdata} meeting_status={meetingstatus} from='teacher'/>}
             </div>
         </div>
     )

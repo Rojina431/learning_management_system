@@ -11,5 +11,6 @@ export default function ErrorHandling(response){
     this.assignment_pdf_create = response.error.assignment_pdf_create || ""
     this.meeting_title = response.error.meeting_title || ""
     this.meeting_subject = response.error.meeting_subject || ""
-    this.meeting_url = response.error.meeting_url || ""
+    this.meeting_start = response.error.meeting_start || ""
+    this.meeting_duration = response.error.meeting_duration || ""
 }
