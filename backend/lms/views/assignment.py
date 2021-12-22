@@ -13,7 +13,7 @@ class AssignmentCreate(GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMi
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['subject_create','teacher_create']
-
+    print(queryset[0].deadline)
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs)
 
@@ -23,6 +23,7 @@ class AssignmentCreate(GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMi
 class SingleAssignmentCreate(GenericAPIView,mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin):
     serializer_class = assignment_serializer.AssignmentCreateSerializer
     queryset = assignmentmodel.AssignmentCreate.objects.all()
+    
     permission_classes = [IsAuthenticated]
     def get(self,request,*args,**kwargs):
         return self.retrieve(request,*args,**kwargs)

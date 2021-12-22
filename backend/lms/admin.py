@@ -42,7 +42,7 @@ class AssignmentGradeAdmin(admin.ModelAdmin):
     list_display = ['assignment', 'assignment_grade']  
 
 class MeetingAdmin(admin.ModelAdmin):
-    list_display = ['meeting_title', 'meeting_url', 'teacher_created', 'meeting_subject']                    
+    list_display = ['meeting_title', 'meeting_start_url', 'meeting_join_url', 'meeting_start', 'meeting_duration', 'teacher_created', 'meeting_subject']                    
 
 admin.site.register(usermodel.User, AccountAdmin)
 admin.site.register(subjectmodel.Subject,SubjectAdmin)
