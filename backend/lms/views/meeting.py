@@ -11,21 +11,8 @@ import jwt
 import requests
 import json
 from time import time
+import pytz
 from datetime import datetime, timedelta
-  
-# Using current time
-ini_time_for_now = datetime.now()
-  
-# printing initial_date
-print ("initial_date", str(ini_time_for_now))
-  
-# Some another datetime
-new_final_time = ini_time_for_now + \
-                 timedelta(days = 2)
-  
-# printing new final_date
-print ("new_final_time", str(new_final_time))
-  
   
 # Enter your API key and your API secret
 API_KEY = 'CjUxl-xZRJaX_sIMj31uIA'
@@ -79,15 +66,17 @@ def createMeeting(data):
       y = json.loads(r.text)
       return y    
 
-total = []
+
 def getMeeting():
+    total = []
     headers = {'authorization': 'Bearer %s' % generateToken(),
                'content-type': 'application/json'}
     r = requests.get(f'https://api.zoom.us/v2/users/me/meetings', headers=headers)
     y = json.loads(r.text)
-    total.append(y)
-    if y['next_page_token'] != '':
-        getMeeting()
+    s = r.json()
+    total.append(s)
+   # if s['next_page_token'] != '':
+       # getMeeting()
     return total          
 
 def ValidateMeetingSubject(value1, value2):
@@ -97,11 +86,11 @@ def ValidateMeetingSubject(value1, value2):
         else:
             return False    
 
-def filterteacher(meetings):
-    data = meetingmodel.MeetingModel.objects.all()
+def filterteacher(zoommetings, data):
+   
     filtered = []
     totalfiltered =[]
-    for meet in meetings:
+    for meet in zoommetings :
       for d in data:
           if meet['join_url'] == d.meeting_join_url :
               filtered.append(d)
@@ -111,7 +100,7 @@ def filterteacher(meetings):
                 timedelta(hours=time2.total_seconds() / 60)
         
         currenttime = datetime.now()
-        diff = (time1.replace(tzinfo=None) - currenttime).total_seconds()
+        diff = (time1 - currenttime).total_seconds()
         if diff > 1:
             totalfiltered.append(filters)
     return totalfiltered     
@@ -122,26 +111,24 @@ class Meeting(APIView):
     filterset_fields = ['teacher_created', 'meeting_subject']  
 
     def get(self, request, format=None):
+        data = meetingmodel.MeetingModel.objects.all()
         allmeetings = getMeeting()
-      
-        filteredd = filterteacher(allmeetings[0]['meetings'])
+        filteredd = filterteacher(allmeetings[0]['meetings'], data)
+        print(filteredd)
         serializers = meeting_serializers.MeetingSerializers(filteredd, many=True)
         return Response({"data":serializers.data, "success":True}, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
         meeting_detail = createMeeting(request.data)
-        print('hello')
         datas = request.data
         datas['meeting_join_url'] = meeting_detail['join_url']
         datas['meeting_start_url'] = meeting_detail['start_url']
         datas['meeting_timezone'] = meeting_detail['timezone']
-        print(request.data)
         serializers = meeting_serializers.MeetingSerializers(data=datas)
         if  serializers.is_valid():
             valid_class = ValidateMeetingSubject(request.data["teacher_created"], request.data['meeting_subject'])  
             if valid_class:
               serializers.save()
-              print('hi')
               return Response({"data":serializers.data, "success":True}, status=status.HTTP_200_OK)
             return Response({"error":"Only the subject teacher are alloweded", "success":False}, status=status.HTTP_400_BAD_REQUEST)    
         else:

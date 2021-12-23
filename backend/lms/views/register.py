@@ -8,7 +8,6 @@ from rest_framework.permissions import IsAuthenticated
 
 
 def validateMobile(mobile):
-  print(mobile.isdigit())
   if mobile.isdigit():
       return True
   else:

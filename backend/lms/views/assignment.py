@@ -13,7 +13,6 @@ class AssignmentCreate(GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMi
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['subject_create','teacher_create']
-    print(queryset[0].deadline)
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs)
 

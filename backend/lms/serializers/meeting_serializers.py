@@ -5,9 +5,6 @@ from ..models import usermodel
 import pytz
 
 class MeetingSerializers(serializers.ModelSerializer):
-    def to_representation(self, instance):
-        self.fields['meeting_start'] = serializers.DateTimeField(default_timezone=pytz.timezone(instance.meeting_start))
-        return super().to_representation(instance)
 
     class Meta:
         model = meetingmodel.MeetingModel
