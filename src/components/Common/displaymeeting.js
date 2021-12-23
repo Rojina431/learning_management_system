@@ -55,13 +55,13 @@ const DisplayMeeting = (props) => {
     } else {
     return (
         <>
-            {props.meeting.data !== undefined && <div style={{paddingTop:"1rem"}}>{props.meeting.data.data.length > 0 ? props.meeting.data.data.map((meet, index) => {
+            {props.meeting !== undefined && <div style={{paddingTop:"1rem"}}>{props.meeting.length > 0 ? props.meeting.map((meet, index) => {
                 return (
                      <div key={index} style={{marginBottom:"0.4rem"}}>
                      <div onClick={() => OpenData(meet.id, meet.teacher_created)} style={{cursor:"pointer"}}>{meet.id === meetingindex[0] ? <FiChevronDown/> : <FiChevronRight/>} <span style={{textTransform:"capitalize"}}>{meet.meeting_title}</span></div>
                      {meet.id === meetingindex[0] && subject !== undefined & subject.data.length === 1 ? 
                      <div>
-                     <a href={props.from === 'teacher' ? meet.meeting_start_url : meet.meeting_join_url} target="_blank">Join {subject.data[0].subject_name} Class</a> 
+                     <a href={props.from === 'teacher' ? meet.meeting_start_url : meet.meeting_join_url} target="_blank">{props.from === 'teacher' ? 'Start ' : 'Join ' }{subject.data[0].subject_name} Class</a> 
                      <p>Starting at: {DateConverison(meet.meeting_start)}</p>
                      
                      </div>: <div></div>}

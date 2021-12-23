@@ -20,7 +20,7 @@ const DashboardStudent = () => {
   }
 
     const [redirect, setRedirect] = useState(false)
-    const subject = useSelector(state => state.subject.logs)
+    const subject = useSelector(state => state.subject.fetchlogs)
     const subjectstatus = useSelector(state => state.subject.status)
     const assignmentsubmit = useSelector(state => state.assignmentsubmit.fetchlogs)
     const assignmentcreate = useSelector(state => state.assignmentcreate.fetchlogs)
@@ -61,7 +61,7 @@ const DashboardStudent = () => {
 
     const createassignment = useMemo(() => {
         let createdassign = assignmentcreate
-        if (createdassign.data !== undefined && subject.data !== undefined) {
+        if (createdassign !== undefined && subject !== undefined && createdassign.data !== undefined && subject.data !== undefined) {
           if (createdassign.data.length > 0 && subject.data.length > 0) {
             console.log(subject)
             const totalcreatedassign = createdassign.data.filter(assign => {
@@ -71,7 +71,7 @@ const DashboardStudent = () => {
                 return sub.id === assign.subject_create
               })
             })
-            if (assignmentsubmit.data !== undefined) {
+            if (assignmentsubmit !== undefined && assignmentsubmit.data !== undefined) {
               if (totalcreatedassign.length > 0 && assignmentsubmit.data.length > 0) {
                const createassign = totalcreatedassign.filter(create => {
                   return !assignmentsubmit.data.find(assign => {
@@ -94,7 +94,6 @@ const DashboardStudent = () => {
               }
               
             } else {
-              console.log('hi4')
               const currentdatetime = new Date(Date.now())
                   const remaining = totalcreatedassign.filter(assign => {
                     const deadline = new Date(assign.deadline)
@@ -103,16 +102,13 @@ const DashboardStudent = () => {
                   return [remaining.length, (totalcreatedassign.length - remaining.length)]
             }
           } else {
-            console.log('hi5')
             return null
           }
         } else {
-          console.log('hi6')
           return null
         }
     }, [assignmentcreate])
 
-    console.log(createassignment)
 
   if (!redirect) {
     return (
@@ -172,7 +168,7 @@ const DashboardStudent = () => {
                      Total Subject
                    </Col>
                    <Col sm='4' md='4' lg='4' xs='12'>
-                     {subject.data !== undefined ? subject.data.length : ""}
+                     {subject !== undefined && subject.data !== undefined ? subject.data.length : ""}
                      </Col>
                  </Row>
                  <Row>
@@ -204,7 +200,7 @@ const DashboardStudent = () => {
             </Col>
           </Row>
           <br/>
-          {subject.data !== undefined &&<DisplaySubject subject={subject.data} status={subjectstatus}/>}
+          {subject !== undefined && subject.data !== undefined &&<DisplaySubject subject={subject.data} status={subjectstatus}/>}
         </>  
     )
   } else {

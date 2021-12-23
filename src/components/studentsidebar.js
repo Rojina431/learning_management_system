@@ -16,7 +16,7 @@ const SidebarComponent = () => {
 
     const [isCollapse, setIsCollapse] = useState(false)
     const [redirect , setRedirect] = useState(false)
-    const subjectdata = useSelector(state=>state.subject.logs)
+    const subjectdata = useSelector(state=>state.subject.fetchlogs)
     const subjectstatus = useSelector(state =>state.subject.status)
    
     const {height, width}  = useWindowsDimensions()
@@ -52,6 +52,8 @@ const SidebarComponent = () => {
     const toggleCollapse = () => {
         setIsCollapse(!isCollapse)
     }
+
+    console.log(subjectdata)
 if (redirect) {
   return <Navigate to='/login'/>
 }else{
@@ -64,19 +66,20 @@ if (redirect) {
     <MenuItem onClick={Logoutuser}><span icon={LogOut}>Logout</span></MenuItem>
     </SidebarHeader>
      <SidebarContent> 
-      <SubMenu title="Subject" icon={<BookOpen/>}>
-        {subjectdata.data !== undefined ? subjectdata.data.length > 0 ? subjectdata.data.map((sub, index) => {
+       {subjectdata !== undefined && subjectdata.data !== undefined &&<SubMenu title="Subject" icon={<BookOpen/>}>
+        { subjectdata.data.length > 0 ? subjectdata.data.map((sub, index) => {
           return (
             <MenuItem key={index}>{sub.subject_name.toUpperCase()} <Link to='/student/class' state={{subject_id:sub.id, subject_name:sub.subject_name}}/></MenuItem>
           )
         }): subjectstatus === 400 ?
         <MenuItem className="error">
          {subjectdata.detail}
-       </MenuItem>:<MenuItem>No related subject!</MenuItem>:<MenuItem className="error">{subjectdata.detail}</MenuItem>}
+       </MenuItem>:<MenuItem>No related subject!</MenuItem>}
        
       </SubMenu>
+}
       <SubMenu title="Meeting" icon={<SiGotomeeting/> }>
-      <MenuItem>Show Meetings <Link to='/teacher/meeting'/></MenuItem>
+      <MenuItem>Show Meetings <Link to='/student/meeting'/></MenuItem>
       </SubMenu>
       </SidebarContent>
     </Menu>

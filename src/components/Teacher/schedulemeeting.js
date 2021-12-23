@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Navigate } from "react-router"
+import { Navigate, useLocation } from "react-router"
 import { Alert, Button, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
 import ErrorHandling from "../../errorhandling"
-import { SubmitMeetingSchedule } from "../../redux/action/schedulemeetingaction"
+import { FetchMeetingSchedule, SubmitMeetingSchedule } from "../../redux/action/schedulemeetingaction"
 import { FetchSubject } from "../../redux/action/subjectaction"
 import Refresh from "../refresh"
 import SubjectSelect from "../subject_select"
@@ -19,6 +19,7 @@ const ScheduleMeetingForm = (props) => {
     const submitmeetingstatus = useSelector(state => state.meeting.submitstatus)
     const [status, setstatus] = useState(false)
     const [submitmeetingerror, setsubmitmeetingerror] = useState({"subjecterr":"", "titleerr":"", "datetimeerr":"", "timeerr":""})
+    const location = useLocation()
 
     useEffect(() => {
       if (submitmeetingstatus === 400) {
@@ -40,6 +41,10 @@ const ScheduleMeetingForm = (props) => {
       } else {
           setstatus(true)
           toggleModal(false)
+          console.log(location)
+          if (location.pathname === '/teacher/meeting') {
+            fetchMeeting()
+          }
          const timeout = setTimeout(() => {
              setstatus(false)  
           }, 1000);
@@ -89,6 +94,15 @@ const ScheduleMeetingForm = (props) => {
       } else {
           setRedirect(true)
           setLoading(false)
+      }
+    }
+
+    const fetchMeeting = async() => {
+      const token = await Refresh()
+      if (token !== null && token !== undefined) {
+          dispatch(FetchMeetingSchedule(token, localStorage.getItem('user_id')))
+      } else {
+          setRedirect(true)
       }
     }
 

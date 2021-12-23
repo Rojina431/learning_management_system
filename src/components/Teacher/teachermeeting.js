@@ -38,7 +38,7 @@ const TeacherMeeting = () => {
             </div>
             <div className="body">
               <NavbarComponent/>
-              {meetingdata.data !== undefined && <DisplayMeeting meeting={meetingdata} meeting_status={meetingstatus} from='teacher'/>}
+              {meetingdata !== undefined && meetingdata.data !== undefined && meetingdata.data.data !== undefined &&<DisplayMeeting meeting={meetingdata.data.data} meeting_status={meetingstatus} from='teacher'/>}
             </div>
         </div>
     )
