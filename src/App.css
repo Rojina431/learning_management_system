@@ -24,3 +24,8 @@
     flex:0.9;
     margin:0.5rem
 }
+
+.breakLine::after{
+    content: "\a";
+    white-space: pre;
+}

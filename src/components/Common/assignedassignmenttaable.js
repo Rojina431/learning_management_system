@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { Fragment, useEffect, useMemo, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Navigate } from "react-router"
 import { Badge, Table } from "reactstrap"
@@ -262,7 +262,7 @@ if (redirect) {
                 {assignmentcreate.length > 0 ? assignmentcreate.map((assign, index) => {
                     console.log('hello')
                     return (
-                            <>
+                            <Fragment key={index}>
                                 <tr>
                                     <td>{assign.title}</td>
                                     <td><a href={assign.assignment_pdf_create} target="_blank"  rel="noreferrer" style={{ color: "black" }}>Show Assignment</a></td>
@@ -305,7 +305,7 @@ if (redirect) {
                                         </td>
                                         : <tr><td></td></tr>}
                                 </tr>}
-                            </>
+                            </Fragment>
                     )
 
                 })

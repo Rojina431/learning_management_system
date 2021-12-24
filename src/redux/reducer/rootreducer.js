@@ -3,6 +3,7 @@ import AssignmentCreateReducer from "./assignmentcreatereducer"
 import AssignmentGradeReducer from "./assignmentgradereducer"
 import AssignmentSubmitReducer from "./assignmentsubmitreducer"
 import LoginReducer from "./loginreducer"
+import RecordingReducer from "./recordingreducer"
 import ScheduleMeetingReducer from "./schedulemeetingreducer"
 import SignupReducer from './signupreducer'
 import SubjectReducer from "./subjectreducer"
@@ -18,7 +19,8 @@ const AppReducer =combineReducers({
     student:StudentFetchReducer,
     teacher:TeacherFetchReducer,
     grade:AssignmentGradeReducer,
-    meeting:ScheduleMeetingReducer
+    meeting:ScheduleMeetingReducer,
+    recording:RecordingReducer
 })
 
 export const RootReducer = (state, action) => {

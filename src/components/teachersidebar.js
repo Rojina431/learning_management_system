@@ -21,7 +21,7 @@ const TeacherSidebarComponent = () => {
     const {height, width}  = useWindowsDimensions()
     const dispatch = useDispatch()
     useEffect(() => {
-       if(width < 800){
+       if(width < 960){
          setIsCollapse(true)
        }else{
            setIsCollapse(false)

@@ -1,5 +1,6 @@
 import { ArrowRightCircle } from "react-feather"
 import AssignmentCreateComponent from "./assignmentcreate"
+import Recording from "./recording"
 const SubjectComponent = (props) => {
 
     const ClassLabel = {
@@ -14,6 +15,15 @@ const SubjectComponent = (props) => {
         9:'nine',
         10:'ten'
     }
+
+    const pStyle = {
+      fontSize:"500",
+    }
+
+    const smallStyle = {
+      fontSize:"small",
+      paddingLeft:"20px"
+    }
     
   return(
     <div className="body">
@@ -22,9 +32,12 @@ const SubjectComponent = (props) => {
         { props.subjectdata.data.map((sub,index) => {
           return (
               <div key={index}>
-              <h4><ArrowRightCircle size={20} color="blue"/> {sub.subject_name}</h4>
+              <ArrowRightCircle size={20} color="blue"/> <span style={pStyle} className="breakLine">{sub.subject_name} </span><small style={smallStyle}>Subject Code : {sub.subject_code}</small>
+              
               <div style={{paddingLeft:"20px"}}>
-              <small>Subject Code : {sub.subject_code}</small>
+              <br/>
+              <Recording subjectdata={sub}/>
+              <br/>
               <AssignmentCreateComponent subjectdata={sub}/>
               </div>
               </div>

@@ -8,7 +8,7 @@ const DisplaySubject = (props) => {
     const cardStyle = {
         marginTop:"0.5rem",
         border:"none",
-        backgroundColor:"#A1D5F0",
+        backgroundImage: "linear-gradient(to right, #7393B3, #89CFF0)",
         padding:"1rem"
       }
 
@@ -19,7 +19,7 @@ const DisplaySubject = (props) => {
     }  
 
       const navigateToDetails = (subject) => {
-         navigate('/student/class', {state:{url:"/", subject_id:subject.id, subject_name:subject.subject_name}})
+         navigate('/student/class', {state:{url:"/", subject_id:subject.id, subject_name:subject.subject_name, from:"dashboard"}})
       }
 
     return (

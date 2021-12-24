@@ -16,7 +16,7 @@ const DashboardStudent = () => {
   const cardStyle = {
     marginTop:"0.5rem",
     border:"none",
-    backgroundColor:"#A1D5F0"
+    backgroundImage: "linear-gradient(to right, #7393B3, #89CFF0)"
   }
 
     const [redirect, setRedirect] = useState(false)

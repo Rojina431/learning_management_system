@@ -19,11 +19,13 @@ const SidebarComponent = () => {
     const subjectdata = useSelector(state=>state.subject.fetchlogs)
     const subjectstatus = useSelector(state =>state.subject.status)
    
+
     const {height, width}  = useWindowsDimensions()
+    console.log(width)
     console.log(width)
     const dispatch = useDispatch()
     useEffect(() => {
-       if(width < 800){
+       if(width < 960){
          setIsCollapse(true)
        }else{
            setIsCollapse(false)
@@ -53,7 +55,6 @@ const SidebarComponent = () => {
         setIsCollapse(!isCollapse)
     }
 
-    console.log(subjectdata)
 if (redirect) {
   return <Navigate to='/login'/>
 }else{

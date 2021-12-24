@@ -67,7 +67,7 @@ const DisplayMeeting = (props) => {
                      </div>: <div></div>}
                      </div>
                 )
-            }) : props.meeting.data.data.length === 0 && props.meeting_status === 200 ? <p style={{position:'fixed', left:"60%"}}>No meeting scheduled!</p> : <Loading/>
+            }) : props.meeting.length === 0 && props.meeting_status === 200 ? <p style={{position:'fixed', left:"60%"}}>No meeting scheduled!</p> : <Loading/>
          }</div>
         }
         </>
