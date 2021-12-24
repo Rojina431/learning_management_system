@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from ..models import assignmentmodel
-import pytz
 
 class AssignmentCreateSerializer(serializers.ModelSerializer):
    
