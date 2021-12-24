@@ -44,6 +44,9 @@ class AssignmentGradeAdmin(admin.ModelAdmin):
 class MeetingAdmin(admin.ModelAdmin):
     list_display = ['meeting_title', 'meeting_start_url', 'meeting_join_url', 'meeting_start', 'meeting_duration', 'teacher_created', 'meeting_subject']                    
 
+class RecordingAdmin(admin.ModelAdmin):
+    list_display = ['recording', 'subject', 'teacher']
+
 admin.site.register(usermodel.User, AccountAdmin)
 admin.site.register(subjectmodel.Subject,SubjectAdmin)
 admin.site.register(usermodel.Teacher,TeacherAdmin)
@@ -52,3 +55,4 @@ admin.site.register(assignmentmodel.AssignmentCreate,AssignmentCreateAdmin)
 admin.site.register(assignmentmodel.AssignmentSubmit,AssignmentSubmitAdmin)
 admin.site.register(assignmentmodel.AssignmentGrade, AssignmentGradeAdmin)
 admin.site.register(meetingmodel.MeetingModel, MeetingAdmin)
+admin.site.register(recordedmodel.RecordedModel, RecordingAdmin)

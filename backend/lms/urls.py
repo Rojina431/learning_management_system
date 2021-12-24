@@ -19,5 +19,6 @@ urlpatterns = [
     path('assignment/<int:pk>',assignment.SingleAssignmentSubmit.as_view()),
     path('assignment/grade/',assignment.AssignmentGrade.as_view()),
     path('meeting/', meeting.Meeting.as_view()),
+    path('recording/', recording.Recording.as_view())
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh')
 ]
