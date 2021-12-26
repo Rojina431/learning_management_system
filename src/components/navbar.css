@@ -3,6 +3,7 @@
     
     border-radius: 0.2rem !important;
     position: sticky;
+    top: 1%;
 }
 
 .ms-auto, .ml-auto{
