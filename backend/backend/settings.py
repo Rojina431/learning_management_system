@@ -67,9 +67,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 AUTH_USER_MODEL = 'lms.User'
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',
+# ]
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
