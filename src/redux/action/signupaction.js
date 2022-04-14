@@ -50,6 +50,7 @@ export const LoginUser = (body) => async(dispatch) => {
         payload:response
     })
   }catch(err){
+    console.log(err.response)
      dispatch({
          type:LoginFailed,
          payload:err.response.data
