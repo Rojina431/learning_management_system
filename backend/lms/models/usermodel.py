@@ -33,6 +33,7 @@ class User(AbstractUser):
     student_class = models.IntegerField(choices=Grade_Choices,null=True,blank=True) 
     teacher_class = MultiSelectField(choices=Grade_Choices,max_length=10,null=True,blank=True)
     roll_no = models.BigIntegerField(null=True,blank=True)   
+
     last_login = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
@@ -69,3 +70,4 @@ class User(AbstractUser):
 
 #     def __str__(self):
 #          return f'{self.teacher.first_name} {self.teacher.last_name}'    
+

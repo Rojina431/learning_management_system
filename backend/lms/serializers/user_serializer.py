@@ -10,6 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
           model = usermodel.User
           fields = ['first_name','last_name' ,'email', 'password','mobile','role', 'student_class', 'teacher_class', 'roll_no']
 
+
       def create(self, validated_data):
           return usermodel.User.objects.create(**validated_data) 
 
@@ -27,6 +28,7 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = usermodel.User
         fields = ['email','password','role', 'student_class', 'teacher_class', 'roll_no', 'access','refresh']  
+
 
     def validate(self, attrs):
         email = attrs.get('email')
@@ -53,4 +55,5 @@ class UserSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model=usermodel.Teacher
 #         fields= ['id', 'teacher', 'teacher_class']             
+
              

@@ -3,6 +3,7 @@ from .usermodel import *
 from .subjectmodel import *
 
 class AssignmentCreate(models.Model):
+
     teacher_create = models.ForeignKey(User,on_delete=models.CASCADE)
     subject_create = models.ForeignKey(Subject,on_delete=models.CASCADE)
     title = models.CharField(max_length=220)

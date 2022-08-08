@@ -6,6 +6,7 @@ class MeetingModel(models.Model):
 
     meeting_title = models.CharField(max_length=200)
     teacher_created = models.ForeignKey(User, on_delete=models.CASCADE)
+
     meeting_created_date = models.DateTimeField(auto_now=True)
     meeting_subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     meeting_duration = models.DurationField()

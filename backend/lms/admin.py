@@ -5,11 +5,13 @@ from .models import *
 
 class AccountAdmin(UserAdmin):
     list_display = ('email','date_joined', 'last_login', 'mobile', 'is_staff','role', 'student_class', 'teacher_class', 'roll_no')
+
     search_fields = ('email',)
     readonly_fields=('date_joined', 'last_login')
     exclude = ('username',)
     fieldsets =(
         (None, {'fields': ('first_name','last_name' ,'email', 'password','mobile','role', 'student_class', 'teacher_class', 'roll_no')}),
+
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
     )
@@ -32,6 +34,7 @@ class SubjectAdmin(admin.ModelAdmin):
 # class StudentAdmin(admin.ModelAdmin):
 #     list_display = ['student','roll_no','student_class'] 
 
+
 class AssignmentCreateAdmin(admin.ModelAdmin):
     list_display = ['teacher_create','subject_create','title','assignment_pdf_create','deadline']
 
@@ -51,6 +54,7 @@ admin.site.register(usermodel.User, AccountAdmin)
 admin.site.register(subjectmodel.Subject,SubjectAdmin)
 # admin.site.register(usermodel.Teacher,TeacherAdmin)
 # admin.site.register(usermodel.Student,StudentAdmin)
+
 admin.site.register(assignmentmodel.AssignmentCreate,AssignmentCreateAdmin)
 admin.site.register(assignmentmodel.AssignmentSubmit,AssignmentSubmitAdmin)
 admin.site.register(assignmentmodel.AssignmentGrade, AssignmentGradeAdmin)

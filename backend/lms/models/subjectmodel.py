@@ -23,5 +23,6 @@ class Subject(models.Model):
     grade = models.IntegerField(choices=Grade_Choices)
     subject_teacher = models.ForeignKey(User,models.SET_NULL,null=True,blank=True)
 
+
     def __str__(self):
         return f'{self.subject_name} - {"class: "+str(self.grade)}'

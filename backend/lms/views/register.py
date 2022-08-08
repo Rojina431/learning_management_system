@@ -44,6 +44,7 @@ def Login(request):
         roles = "Admin"    
 
       return Response({"error":{"details":roles + "not registered"},"success":False},status=status.HTTP_401_UNAUTHORIZED)   
+
   else:
    return Response({"error":serializer.errors,"success":False},status=status.HTTP_400_BAD_REQUEST)  
 
@@ -61,7 +62,6 @@ def GetUserById(request, pk):
   serializer = user_serializer.UserSerializer(user)
   return Response({"data":serializer.data, "success":True}, status=status.HTTP_200_OK)
 
-
 # @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 # def Students(request):
@@ -75,3 +75,4 @@ def GetUserById(request, pk):
 #   teacher = usermodel.Teacher.objects.all()
 #   serializer = user_serializer.TeacherSerializer(teacher, many=True)
 #   return Response({"data":serializer.data, "success":True}, status=status.HTTP_200_OK)
+
