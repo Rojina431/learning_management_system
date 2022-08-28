@@ -5,16 +5,19 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from multiselectfield import MultiSelectField
 
 Grade_Choices = [
-       (1,'One'),
-       (2,'Two'),
-       (3,'Three'),
-       (4,'Four'),
-       (5,'Five'),
-       (6,'Six'),
-       (7,'Seven'),
-       (8,'Eight'),
-       (9,'Nine'),
-       (10,'Ten')
+       ('nursery', 'Nursery'),
+       ('lkg', 'LKG'),
+       ('ukg', 'UKG'),
+       ('1','One'),
+       ('2','Two'),
+       ('3','Three'),
+       ('4','Four'),
+       ('5','Five'),
+       ('6','Six'),
+       ('7','Seven'),
+       ('8','Eight'),
+       ('9','Nine'),
+       ('10','Ten')
    ]
 # Create your models here.
 class User(AbstractUser):
@@ -30,9 +33,9 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=200)
     mobile = models.CharField(max_length=10)
     role = models.IntegerField(choices=role_choices, null=True,blank=True)
-    student_class = models.IntegerField(choices=Grade_Choices,null=True,blank=True) 
+    student_class = models.CharField(choices=Grade_Choices, max_length = 10, null=True,blank=True) 
     teacher_class = MultiSelectField(choices=Grade_Choices,max_length=10,null=True,blank=True)
-    roll_no = models.BigIntegerField(null=True,blank=True)   
+    roll_no = models.CharField(max_length= 15, null=True,blank=True)   
 
     last_login = models.DateTimeField(auto_now=True)
 
@@ -55,6 +58,11 @@ class User(AbstractUser):
 
     def __str__(self) -> str:
         return f'{self.email} - {self.role}'  
+
+class OTPModels(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    otp = models.BigIntegerField()
+    datetime = models.DateTimeField(auto_now=True)
 
 # class Student(models.Model):
 #     student = models.OneToOneField(User,on_delete=models.CASCADE)

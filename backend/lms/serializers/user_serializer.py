@@ -46,6 +46,11 @@ class UserSerializer(serializers.ModelSerializer):
         model=usermodel.User
         fields = ['id','email','first_name','last_name','mobile', 'role', 'student_class', 'teacher_class', 'roll_no']
 
+class OTPSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = usermodel.OTPModels
+        fields = ['id', 'user', 'otp', 'datetime']       
+
 # class StudentSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model=usermodel.Student

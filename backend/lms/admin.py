@@ -25,6 +25,9 @@ class AccountAdmin(UserAdmin):
     filter_horizontal = ()
     list_filter = ()
 
+class OTPAdmin(admin.ModelAdmin):
+    list_display = ['user', 'otp', 'datetime']
+
 class SubjectAdmin(admin.ModelAdmin):
     list_display= ['subject_name','subject_code','grade','subject_teacher'] 
 
@@ -51,6 +54,7 @@ class RecordingAdmin(admin.ModelAdmin):
     list_display = ['recording', 'subject', 'teacher']
 
 admin.site.register(usermodel.User, AccountAdmin)
+admin.site.register(usermodel.OTPModels, OTPAdmin)
 admin.site.register(subjectmodel.Subject,SubjectAdmin)
 # admin.site.register(usermodel.Teacher,TeacherAdmin)
 # admin.site.register(usermodel.Student,StudentAdmin)

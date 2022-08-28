@@ -5,13 +5,24 @@ from ..serializers import user_serializer
 from django.contrib.auth.hashers import make_password,check_password
 from ..models import *
 from rest_framework.permissions import IsAuthenticated
+import math, random
+from django.core.mail import send_mail
+from functions import dateTimeDiff
+import datetime
+from django.utils.timezone import utc
 
 
 def validateMobile(mobile):
   if mobile.isdigit():
       return True
   else:
-      return False        
+      return False    
+
+# def validateRole(role, roll, std_c, t_c):
+#   if(role == 0):
+#     if(roll == "" & std_c == ""):
+#       return 
+
 
 #Create your views here.
 @api_view(['POST'])
@@ -61,6 +72,66 @@ def GetUserById(request, pk):
   user = usermodel.User.objects.filter(id = pk)
   serializer = user_serializer.UserSerializer(user)
   return Response({"data":serializer.data, "success":True}, status=status.HTTP_200_OK)
+
+def generateOtp():
+  value = "0123456789"
+  otp = ""
+  for i in range(4):
+    otp += value[math.floor(random.random() * 10)]
+  return otp  
+
+@api_view(['POST', 'GET', 'PATCH'])
+def Send_otp(request):
+
+  if(request.data):
+    email = request.data["email"]
+    otp="12345"
+    print(email)
+    if(email != ""):
+      user = usermodel.User.objects.filter(email = email)
+      #print(user)
+     
+      if(user):
+        print(user[0])
+        print(user[0].email)
+        otpuser = usermodel.OTPModels.objects.filter(user= user[0].id)
+        if(otpuser):
+          print(otpuser) 
+          diff = dateTimeDiff(otpuser[0].datetime.replace(tzinfo=utc))
+          print("hello")
+          print(diff)
+          if(diff < 600):
+            return Response({"success":False, "error":"Resend after 10 minutes"}, status = status.HTTP_400_BAD_REQUEST)
+          else:
+            otp = generateOtp()
+            data = {
+            'otp':otp
+            }
+            serializer = user_serializer.OTPSerializer(otpuser, data = data, partial=True)
+            if serializer.is_valid():
+              serializer.save()
+              send_mail('OTP request',otp,'therojinabaral@gmail.com',[email], fail_silently=False)
+              return Response({"success":True, "data":"OTP send successfully"}, status = status.HTTP_200_OK) 
+            else:
+              return Response({"success":False, "error":serializer.errors}, status = status.HTTP_400_BAD_REQUEST)
+        else:
+          otp = generateOtp()
+          data = {
+            'user':user[0].id,
+            'otp':otp
+          }
+          serializer = user_serializer.OTPSerializer(data = data)
+          print(serializer)
+          if serializer.is_valid():
+            serializer.save()
+            send_mail('OTP request',otp,'therojinabaral@gmail.com',[email], fail_silently=False)
+            return Response({"success":True, "data":"OTP send successfully"}, status = status.HTTP_200_OK)
+          else:
+            return Response({"success":False, "error":serializer.errors}, status = status.HTTP_400_BAD_REQUEST)
+        return Response({"success":False, "error":"Email is required"}, status = status.HTTP_400_BAD_REQUEST)
+      return Response({"success":False, "error":"User not found with this email"}, status = status.HTTP_400_BAD_REQUEST)
+  return Response({"success":False, "error":"Email is required"}, status = status.HTTP_400_BAD_REQUEST)
+
 
 # @api_view(['GET'])
 # @permission_classes([IsAuthenticated])

@@ -9,6 +9,7 @@ urlpatterns = [
     path('signup/', register.Register),
     path('login/',register.Login),
     path('user/',register.Users),
+    path('send_otp/', register.Send_otp),
     # path('student/',register.Students),
     # path('teacher/',register.Teachers),
     path('subject/',subject.AllSubject.as_view()),
